@@ -10,3 +10,24 @@
 | [Github](https://github.com)            | Git Service            |
 | [GDScript Toolkit](https://github.com/Scony/godot-gdscript-toolkit) | Formatter for GDScript |
 
+## GDSscript Formatter
+
+### Install
+# On Windows & Arch
+```cmd
+pip install gdtoolkit
+```
+# On MacOS and Linux
+```sh
+pip3 install gdtoolkit
+```
+
+### Format
+#### In Bash
+```bash
+gdformat $(find . -name '*.gd')
+```
+# In Fish
+```fish
+gdformat **.gd
+```
