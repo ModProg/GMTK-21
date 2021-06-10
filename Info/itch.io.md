@@ -1,12 +1,12 @@
 # itch.io Profiles
 
-- modprog.itch.io
+- https://modprog.itch.io
+- https://jaghip.itch.io/
 
 ## Missing
 - douglasasted
 - Itokazu5112
 - Madhava prasath
 - teedubz
-- enforce
 - Pixel
 - Waden
