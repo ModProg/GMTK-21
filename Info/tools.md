@@ -13,11 +13,11 @@
 ## GDSscript Formatter
 
 ### Install
-# On Windows & Arch
+#### On Windows & Arch
 ```cmd
 pip install gdtoolkit
 ```
-# On MacOS and Linux
+#### On MacOS and Linux
 ```sh
 pip3 install gdtoolkit
 ```
@@ -27,7 +27,7 @@ pip3 install gdtoolkit
 ```bash
 gdformat $(find . -name '*.gd')
 ```
-# In Fish
+#### In Fish
 ```fish
 gdformat **.gd
 ```
