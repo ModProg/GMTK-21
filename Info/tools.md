@@ -22,6 +22,8 @@ pip install gdtoolkit
 pip3 install gdtoolkit
 ```
 
+Make sure `~/.local/bin/` is in your `$PATH`
+
 ### Format
 #### In Bash
 ```bash
