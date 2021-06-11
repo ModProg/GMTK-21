@@ -3,11 +3,8 @@ extends PathFollow2D
 enum Element {Water, Air, Earth, Fire}
 
 export(Element) var element = Element.Water
-export var speed = 1;
-
-# Declare member variables here. Examples:
-# var a: int = 2
-# var b: String = "text"
+export var speed = 100;
+export var health = 100;
 
 const textures = {
 	Element.Water: preload("res://Art/Enemies/Water Enemy.tres"),
@@ -22,9 +19,24 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	offset+=speed*delta
 	if unit_offset==1:
 		queue_free()
 
 
+
+
+func _on_Area2D_area_entered(area: Area2D) -> void:
+	if area.is_in_group("projectile"):
+		print(area)
+		area.get_parent().queue_free()
+		health -= 10
+		if health <= 0:
+			queue_free()
+		$Sprite.modulate = Color.darkgray
+		$FlashTimer.start()
+
+
+func _on_FlashTimer_timeout() -> void:
+	$Sprite.modulate = Color.white

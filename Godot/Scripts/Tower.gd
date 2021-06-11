@@ -17,6 +17,7 @@ const textures = {
 	Element.Earth: preload("res://Art/Towers/Earth Tower.tres"),
 	Element.Fire: preload("res://Art/Towers/Fire Tower.tres"),
 }
+const projectile = preload("res://Scenes/Projectile.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	texture = textures[element]
@@ -24,7 +25,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if building:
 		var tile_pos = tilemap.world_to_map(tilemap.get_local_mouse_position())
 		if tilemap.get_cellv(tile_pos) == 1:
@@ -41,14 +42,18 @@ func _process(delta: float) -> void:
 				if(dist > cdist):
 					dist = cdist;
 					current_target = weakref(target)
+			if current_target:
+				$ShootTimer.start()
 		if current_target:
-			if(!current_target.get_ref()):
+			var target = current_target.get_ref()
+			if(!target):
 				current_target = null
 			else:
-				if targets.find(current_target.get_ref()) == -1:
+				if targets.find(target) == -1:
 					current_target = null
 				else:
-					current_target.get_ref().queue_free()
+					var target_position = target.get_global_transform().origin;
+					rotation = (target_position - position).angle()
 	
 func _input(event: InputEvent) -> void:
 	if building && event is InputEventMouseButton && event.button_index == 1:
@@ -68,3 +73,14 @@ func _on_Area2D_area_entered(area: Area2D) -> void:
 func _on_Area2D_area_exited(area: Area2D) -> void:
 	if area.is_in_group("enemy"):
 		targets.erase(area.get_parent())
+
+
+func _on_ShootTimer_timeout() -> void:
+	if current_target:
+		var target = current_target.get_ref()
+		if target:
+			var instance = projectile.instance()
+			instance.position = position
+			instance.target_ref = current_target
+			instance.element = element
+			get_parent().add_child(instance)

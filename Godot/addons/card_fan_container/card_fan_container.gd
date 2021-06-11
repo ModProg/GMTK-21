@@ -47,18 +47,14 @@ func _resort():
 		return
 	var bow_width = rect.size.x * (.5 - padding) * 2
 	var bow_height = bow_spacing * rect.size.y
-	print(bow_width, " ", bow_height)
 	var radius = (4 * pow(bow_height, 2) + pow(bow_width, 2)) / (8 * bow_height)
 	var max_total_angle = 2 * asin(bow_width / (2 * radius))
-	#print((4*pow(bow_height,2)+pow(bow_width,2)))
 	var root = Vector2(rect.size.x / 2, rect.size.y - bow_height + radius)
 	var pad_point = Vector2(rect.size.x * padding, rect.size.y)
 	#var radius = pad_point.distance_to(root)
-	print(pad_point, root, radius)
 
 	var wanted_angle = atan((child_size.x / 2) / radius) * 2
 	var angle = min(wanted_angle, deg2rad(max_angle))
-	print(angle, "<=", max_angle)
 	var total_angle = min((children.size() - 1) * angle, max_total_angle - wanted_angle)
 	if children.size() == 1:
 		angle = 0

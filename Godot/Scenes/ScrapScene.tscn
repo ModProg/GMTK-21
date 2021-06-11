@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Art/Tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/UI.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/UI/UI.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Tower.tscn" type="PackedScene" id=5]
 
 [sub_resource type="Curve2D" id=1]
@@ -31,6 +31,7 @@ tile_data = PoolIntArray( 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 0, 0, 
 curve = SubResource( 1 )
 
 [node name="Enemy" parent="Node2D/Path2D" instance=ExtResource( 2 )]
+health = 50
 
 [node name="Towers" type="Node2D" parent="Node2D"]
 
