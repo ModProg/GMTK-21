@@ -11,7 +11,12 @@ config_version=4
 [application]
 
 config/name="GMTK-21"
+run/main_scene="res://ScrapScene.tscn"
 config/icon="res://icon.png"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/card_fan_container/plugin.cfg" )
 
 [physics]
 
