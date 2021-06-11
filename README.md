@@ -16,8 +16,8 @@
 - teedubz
 - enforce
 - Itokazu5112
-- douglasasted
 
 ### Art
 - Pixel
 - Waden
+- douglasasted
