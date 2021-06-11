@@ -1,16 +1,25 @@
 extends Sprite
 
 
-# Declare member variables here. Examples:
-# var a: int = 2
-# var b: String = "text"
+enum Element {Water, Air, Earth, Fire}
+
+export(Element) var element = Element.Fire
 export var building = false;
+
 onready var tilemap = $"../../TileMap";
+
 var targets = [];
 var current_target: WeakRef;
+
+const textures = {
+	Element.Water: preload("res://Art/Towers/Water Tower.tres"),
+	Element.Air: preload("res://Art/Towers/Air Tower.tres"),
+	Element.Earth: preload("res://Art/Towers/Earth Tower.tres"),
+	Element.Fire: preload("res://Art/Towers/Fire Tower.tres"),
+}
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	texture = textures[element]
 
 
 
@@ -23,7 +32,7 @@ func _process(delta: float) -> void:
 			modulate = Color.white
 		else:
 			global_position = get_global_mouse_position()
-			modulate = Color.red
+			modulate = Color.black
 	else:
 		if !current_target:
 			var dist = INF
