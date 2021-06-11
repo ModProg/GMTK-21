@@ -58,6 +58,11 @@ _data = {
 
 [node name="Node" type="Node"]
 
+[node name="MarginContainer" parent="." instance=ExtResource( 4 )]
+margin_left = 50.0
+margin_right = -50.0
+margin_bottom = -20.0
+
 [node name="Node2D" type="Node2D" parent="."]
 
 [node name="TileMap" type="TileMap" parent="Node2D"]
@@ -81,14 +86,6 @@ speed = 100
 
 [node name="Enemy" parent="Node2D/Path2D/PathFollow2D" instance=ExtResource( 2 )]
 
-[node name="Camera2D" type="Camera2D" parent="Node2D"]
-position = Vector2( 512, 232 )
-
 [node name="Towers" type="Node2D" parent="Node2D"]
 
 [node name="Tower" parent="Node2D/Towers" instance=ExtResource( 5 )]
-
-[node name="MarginContainer" parent="." instance=ExtResource( 4 )]
-margin_left = 50.0
-margin_right = -50.0
-margin_bottom = -20.0
