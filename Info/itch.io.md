@@ -2,9 +2,9 @@
 
 - https://modprog.itch.io
 - https://jaghip.itch.io/
+- https://douglas-asted.itch.io
 
 ## Missing
-- douglasasted
 - Itokazu5112
 - Madhava prasath
 - teedubz
