@@ -15,7 +15,6 @@
 
 - teedubz
 - enforce
-- Itokazu5112
 
 ### Art
 - Pixel
