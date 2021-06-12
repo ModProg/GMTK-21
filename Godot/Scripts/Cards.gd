@@ -12,7 +12,10 @@ func _ready():
 	connect("mouse_entered", self, "_highlight_card")
 	connect("mouse_exited", self, "_play_down")
 	wait_timer.connect("timeout", self, "_on_wait_timer_timeout")
+	
 	initial_pos = self.rect_position
+	
+	#creating some child nodes
 	self.add_child(tween)
 	self.add_child(wait_timer)
 	wait_timer.one_shot = true
