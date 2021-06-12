@@ -50,6 +50,7 @@ func NewRound():
 	ui_controller.total_rounds = rounds.size()
 	ui_controller.max_health = health
 	ui_controller.health = cur_health
+	ui_controller.message = cur_round.help_text
 	game_controller.play_music(cur_round.music)
 
 

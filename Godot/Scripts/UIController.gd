@@ -15,6 +15,7 @@ var _current_round: int
 
 onready var roundText: RichTextLabel = $"MarginContainer/Round Text"
 onready var healthText: RichTextLabel = $"MarginContainer/Health Text"
+onready var messageText: RichTextLabel = $MarginContainer3/PanelContainer/RichTextLabel
 onready var towerTables = $MarginContainer2/TowerTables
 var game_controller
 
@@ -26,7 +27,7 @@ func start() -> void:
 
 
 func set_message(value: String):
-	pass
+	Text.iconize(messageText,value)
 
 
 #func set_game_controller(value: GameController):
@@ -36,10 +37,10 @@ func set_message(value: String):
 #	roundText.text = 'Rounds remaining: ' + str(value)
 
 
+
 func set_health(value: int):
 	_health = value
 	healthText.text = '\nHealth: ' + str(_health) + ' / ' + str(_max_health)
-
 
 func set_max_health(value: int):
 	_max_health = value

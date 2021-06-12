@@ -11,7 +11,8 @@ var round_time: float
 var spawn_time: float
 var initial_spawn_time: float
 var retry: bool
-var music
+var music: AudioStream
+var help_text: String
 
 var res_enemy_count: int
 var res_enemy_distribution: Dictionary
@@ -62,7 +63,10 @@ func from_dict(value: Dictionary) -> Round:
 			music = Music.get_music_by_name(value.music)
 		else:
 			music = Music.get_music_by_id(value.music)
-
+	
+	if value.has("help_text"):
+		help_text = value.help_text
+	
 	spawn_time = value.spawn_time
 	round_time = value.round_time
 

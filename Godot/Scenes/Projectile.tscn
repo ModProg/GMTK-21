@@ -46,6 +46,5 @@ anims/Fire = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Destroyarea"]
 shape = SubResource( 3 )
-disabled = true
 
 [connection signal="area_entered" from="Destroyarea" to="." method="_on_Destroyarea_area_entered"]
