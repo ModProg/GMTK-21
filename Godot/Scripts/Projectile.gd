@@ -68,7 +68,7 @@ func physic_according_to_element(element,target):
 		"Earth":
 			#calput stuff so that we can make user to fake 3d like in art making the 
 			#rock to rise and then we can put that animation here
-			var time=distance/velocity
+			var time=2 #distance/velocity
 			#play assending animation
 			yield(get_tree().create_timer(time/2),"timeout")
 			#play decending animation
