@@ -32,7 +32,6 @@ func _physics_process(delta: float) -> void:
 
 func _on_Area2D_area_entered(area: Area2D) -> void:
 	if area.is_in_group("projectile"):
-
 		# Same element no damage
 		# if projectile.element == element:
 		# 	$Sprite.modulate = Color.white

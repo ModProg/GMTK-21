@@ -10,8 +10,8 @@ func _ready():
 
 
 func on_button_pressed(button):
-	var Tower_instance=Tower_scene.instance()
-	Tower_instance.position=get_global_mouse_position()
-	Tower_instance.element=button
-	Tower_instance.texture=Tower_instance.textures[Tower_instance.element]
+	var Tower_instance = Tower_scene.instance()
+	Tower_instance.position = get_global_mouse_position()
+	Tower_instance.element = button
+	Tower_instance.texture = Tower_instance.textures[Tower_instance.element]
 	game_controller.add_child(Tower_instance)

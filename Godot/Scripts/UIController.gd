@@ -30,7 +30,6 @@ func set_message(value: String):
 #func set_game_controller(value: GameController):
 #	towerTables.game_controller = value
 
-
 #func set_rounds_remaining(value: int):
 #	roundText.text = 'Rounds remaining: ' + str(value)
 
@@ -44,10 +43,12 @@ func set_max_health(value: int):
 	_max_health = value
 	healthText.text = '\nHealth: ' + str(_health) + ' / ' + str(_max_health)
 
+
 func set_total_rounds(value: int):
 	_total_rounds = value
-	roundText.text = 'Round ' + str(_current_round) + "/"+str(_total_rounds)
+	roundText.text = 'Round ' + str(_current_round) + "/" + str(_total_rounds)
+
 
 func set_current_round(value: int):
 	_current_round = value
-	roundText.text = 'Round ' + str(_current_round) + "/"+str(_total_rounds)
+	roundText.text = 'Round ' + str(_current_round) + "/" + str(_total_rounds)

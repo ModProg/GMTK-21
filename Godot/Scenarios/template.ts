@@ -1,7 +1,12 @@
-type scenatio = {
+type scenario = {
   //Exact name of the file in Scenes/Maps e.g.: "Scrap"
   map: string;
+  //Either the exact name of a file in Sounds/Music, or the leading number
+  music: string | number;
   rounds: {
+    //Either the exact name of a file in Sounds/Music, or the leading number
+    //Overrides scenario music
+    music: string | number;
     message: string,
     // Only one of enemy_distribution/enemy_count/enemies may be used per round
     // Specify number of enemies per element

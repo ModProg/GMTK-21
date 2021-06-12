@@ -15,9 +15,14 @@ _global_script_classes=[ {
 "path": "res://Scripts/GameController.gd"
 }, {
 "base": "Reference",
+"class": "Music",
+"language": "GDScript",
+"path": "res://Scripts/Utils/Sound.gd"
+}, {
+"base": "Reference",
 "class": "Round",
 "language": "GDScript",
-"path": "res://Scripts/Round.gd"
+"path": "res://Scripts/Utils/Round.gd"
 }, {
 "base": "Control",
 "class": "UIController",
@@ -26,6 +31,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "GameController": "",
+"Music": "",
 "Round": "",
 "UIController": ""
 }

@@ -27,14 +27,15 @@ func _physics_process(delta: float) -> void:
 	else:
 		queue_free()
 
+
 func assgin_enum_value(param):
 	match param:
 		"Water":
-			element=Element.Water
+			element = Element.Water
 		"Fire":
-			element=Element.Fire
+			element = Element.Fire
 		"Air":
-			element=Element.Air
+			element = Element.Air
 		"Earth":
-			element=Element.Earth
-	texture=textures[element]
+			element = Element.Earth
+	texture = textures[element]
