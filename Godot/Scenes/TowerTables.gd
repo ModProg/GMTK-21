@@ -14,4 +14,4 @@ func on_button_pressed(button):
 	Tower_instance.position=get_global_mouse_position()
 	Tower_instance.element=button
 	Tower_instance.texture=Tower_instance.textures[Tower_instance.element]
-	tower.add_child(Tower_instance)
+	game_controller.add_child(Tower_instance)

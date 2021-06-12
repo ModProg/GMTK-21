@@ -3,14 +3,6 @@ extends Node
 enum Element { Water, Air, Earth, Fire }
 
 
-class Round:
-	var enemy_count: int
-	var enemy_distribution: Dictionary
-	var enemies: Array
-	var round_time: float
-	var spawn_time: float
-
-
 # Round settings
 #onready var roundText = $"../../UIContainer/Round Text"
 #onready var healthText = $"../../UIContainer/Health Text"
@@ -23,7 +15,7 @@ const health = 100
 
 var paths: Array
 var rounds: Array
-var cur_round  #: Round
+var cur_round: Round
 var cur_health = health
 var end = false
 
@@ -31,26 +23,9 @@ var ui_controller: UIController
 
 
 func SpawnEnemy():
-	var e
-	if cur_round.enemies:
-		if cur_round.enemies.size() <= 0:
-			return spawnTimer.stop()
-		e = cur_round.enemies.pop_front()
-	elif cur_round.enemy_distribution:
-		var keys = cur_round.enemy_distribution.keys()
-		if keys.size() == 0:
-			return spawnTimer.stop()
-		e = keys[rand_range(0, keys.size())]
-		if cur_round.enemy_distribution[e] == 0:
-			cur_round.enemy_distribution.erase(e)
-			return SpawnEnemy()
-		cur_round.enemy_distribution[e] -= 1
-	else:
-		if cur_round.enemy_count <= 0:
-			return spawnTimer.stop()
-		cur_round.enemy_count -= 1
-		e = Element.values()[rand_range(0, Element.keys().size())]
-
+	var e = cur_round.get_enemy()
+	if e == -1:
+		return spawnTimer.stop()
 	var enemy = enemyScene.instance()
 	enemy.element = e
 	enemy.round_controller = self

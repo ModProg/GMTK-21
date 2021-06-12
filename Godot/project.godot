@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/GameController.gd"
 }, {
+"base": "Reference",
+"class": "Round",
+"language": "GDScript",
+"path": "res://Scripts/Round.gd"
+}, {
 "base": "Control",
 "class": "UIController",
 "language": "GDScript",
@@ -21,6 +26,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "GameController": "",
+"Round": "",
 "UIController": ""
 }
 

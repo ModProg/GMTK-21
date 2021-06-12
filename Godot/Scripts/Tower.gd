@@ -6,7 +6,7 @@ enum combined_element{Water_Air,Earth_Water,Earth_Fire,Earth_Air,Fire_Water,Air_
 export (String) var element = "Fire"
 export var building = false
 
-onready var tilemap = $"../../Map/TileMap"
+onready var tile_map = $"../Map/TileMap"
 
 var targets = []
 var current_target: WeakRef
@@ -38,10 +38,10 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	if building:
-		var tile_pos = tilemap.world_to_map(tilemap.get_local_mouse_position())
-		if tilemap.get_cellv(tile_pos) == 1:
-			global_position = tilemap.to_global(
-				tilemap.map_to_world(tile_pos) + tilemap.cell_size / 2
+		var tile_pos = tile_map.world_to_map(tile_map.get_local_mouse_position())
+		if tile_map.get_cellv(tile_pos) == 1:
+			global_position = tile_map.to_global(
+				tile_map.map_to_world(tile_pos) + tile_map.cell_size / 2
 			)
 			modulate = Color.white
 		else:
@@ -69,15 +69,14 @@ func _physics_process(delta: float) -> void:
 					var target_position = target.get_global_transform().origin
 					rotation = (target_position - position).angle()
 
-
 func _input(event: InputEvent) -> void:
 	if building && event is InputEventMouseButton && event.button_index == 1:
-		var tile_pos = tilemap.world_to_map(tilemap.get_local_mouse_position())
-		if tilemap.get_cellv(tile_pos) == 1:
-			global_position = tilemap.to_global(
-				tilemap.map_to_world(tile_pos) + tilemap.cell_size / 2
+		var tile_pos = tile_map.world_to_map(tile_map.get_local_mouse_position())
+		if tile_map.get_cellv(tile_pos) == 1:
+			global_position = tile_map.to_global(
+				tile_map.map_to_world(tile_pos) + tile_map.cell_size / 2
 			)
-			tilemap.set_cellv(tile_pos, 2)
+			tile_map.set_cellv(tile_pos, 2)
 			building = false
 
 
