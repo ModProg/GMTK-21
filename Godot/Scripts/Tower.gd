@@ -1,6 +1,5 @@
 extends Sprite
 
-signal change_texture(texture_name)
 
 enum combined_element{Water_Air,Earth_Water,Earth_Fire,Earth_Air,Fire_Water,Air_Fire}
 
@@ -95,9 +94,9 @@ func _on_ShootTimer_timeout() -> void:
 		if target:
 			var instance = projectile.instance()
 			instance.position = position
+			instance.element=instance.assgin_enum_value(element)
 			instance.target_ref = current_target
 			instance.element = element
 			get_parent().add_child(instance)
 
-func on_chaning_texture(texture_name):
-	texture=textures[texture_name]
+

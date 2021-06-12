@@ -1,21 +1,22 @@
 extends Sprite
 
-export (String) var element = "Water"
+enum Element { Water, Air, Earth, Fire }
+export (Element) var element = Element.Water
 export var speed = 200
 
 var target_ref: WeakRef = null
 
 const textures = {
-	"Water": preload("res://Art/Projectiles/Water Projectile.tres"),
-	"Air": preload("res://Art/Projectiles/Air Projectile.tres"),
-	"Earth": preload("res://Art/Projectiles/Earth Projectile.tres"),
-	"Fire": preload("res://Art/Projectiles/Fire Projectile.tres"),
+	Element.Water: preload("res://Art/Projectiles/Water Projectile.tres"),
+	Element.Air: preload("res://Art/Projectiles/Air Projectile.tres"),
+	Element.Earth: preload("res://Art/Projectiles/Earth Projectile.tres"),
+	Element.Fire: preload("res://Art/Projectiles/Fire Projectile.tres"),
 }
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	texture = textures[element]
+	pass
 
 
 func _physics_process(delta: float) -> void:
@@ -25,3 +26,15 @@ func _physics_process(delta: float) -> void:
 		position += velocity * delta
 	else:
 		queue_free()
+
+func assgin_enum_value(param):
+	match param:
+		"Water":
+			element=Element.Water
+		"Fire":
+			element=Element.Fire
+		"Air":
+			element=Element.Air
+		"Earth":
+			element=Element.Earth
+	texture=textures[element]
