@@ -1,49 +1,39 @@
-extends Node2D
+extends Node
 
 # Round settings
-onready var roundText = get_parent().get_parent().get_node("UIContainer").get_node("Round Text")
-onready var healthText = get_parent().get_parent().get_node("UIContainer").get_node("Health Text")
-onready var enemyScene = preload("res://Scenes/Enemy.tscn")
+onready var roundText = $"../../UIContainer/Round Text"
+onready var healthText = $"../../UIContainer/Health Text"
+onready var paths = get_tree().get_nodes_in_group("path")
+onready var spawnTimer = $SpawnTimer
+onready var roundTimer = $RoundTimer
+
+const enemyScene = preload("res://Scenes/Enemy.tscn")
 const maxRound = 10
 const roundTime = 10
 const spawnTime = 0.75
 const health = 100
 const enemies = 5
 
-var currentRound = 0
+var currentRound = -1
 var cur_enemies = 0
-var cur_roundTime = 0
-var cur_spawnTime = 0
 var cur_health = 100
 
 var end = false
 
 func _ready():
-	cur_roundTime = roundTime
-	roundText.text = 'Round: ' + str(currentRound) + ' / ' + str(maxRound)
-	
-	cur_spawnTime = spawnTime
-
-func _process(delta):
-	if end:
-		return
-	# Updating timers
-	cur_roundTime -= delta
-	cur_spawnTime -= delta
-	if cur_roundTime < 0:
-		NewRound()
-	elif cur_spawnTime < 0 and cur_roundTime != 0 and cur_enemies != 0:
-		SpawnEnemy()
+	NewRound()
 
 func SpawnEnemy():
-	cur_spawnTime = spawnTime
+	print("hi")
+	if enemies == 0:
+		spawnTimer.stop()
+		return
 	cur_enemies -= 1
-	
 	var enemy = enemyScene.instance()
-	
-	enemy.element = int(floor(rand_range(0, 3)))
-	
-	add_child(enemy)
+	enemy.element = int(floor(rand_range(0,4)))
+	enemy.round_controller = self
+	print(paths)
+	paths[rand_range(0,paths.size())].add_child(enemy)
 
 func NewRound():
 	if currentRound == maxRound:
@@ -51,9 +41,9 @@ func NewRound():
 		return
 	
 	currentRound += 1
-	cur_roundTime = roundTime
+	roundTimer.start(roundTime)
+	spawnTimer.start(spawnTime)
 	cur_enemies = enemies
-	cur_spawnTime = spawnTime
 	roundText.text = 'Round: ' + str(currentRound) + ' / ' + str(maxRound)
 	
 func Damage(dmg):

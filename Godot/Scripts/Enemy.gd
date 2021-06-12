@@ -7,6 +7,8 @@ export var damage = 10;
 export var speed = 100;
 export var health = 25;
 
+var round_controller;
+
 const textures = {
 	Element.Water: preload("res://Art/Enemies/Water Enemy.tres"),
 	Element.Air: preload("res://Art/Enemies/Air Enemy.tres"),
@@ -23,7 +25,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	offset+=speed*delta
 	if unit_offset==1:
-		get_parent().Damage(damage)
+		round_controller.Damage(damage)
 		queue_free()
 
 
