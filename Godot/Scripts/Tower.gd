@@ -38,8 +38,8 @@ func _physics_process(delta: float) -> void:
 		if ! current_target:
 			var dist = INF
 			for target in targets:
-				var cdist =(position - target.get_global_transform().origin).length()
-				if(dist > cdist):
+				var cdist = (position - target.get_global_transform().origin).length()
+				if dist > cdist:
 					dist = cdist
 					current_target = weakref(target)
 			if current_target:
@@ -85,6 +85,7 @@ func _on_ShootTimer_timeout() -> void:
 			instance.target_ref = current_target
 			instance.element = element
 			get_parent().add_child(instance)
+
 
 func set_element_name(names):
 	return get(names)

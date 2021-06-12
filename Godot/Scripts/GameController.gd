@@ -1,14 +1,15 @@
 tool
 extends Node
 
-enum JSONElement {water, air, earth, fire }
+enum JSONElement { water, air, earth, fire }
 
-export(String, FILE, "*.json") var _scenario
+export (String, FILE, "*.json") var _scenario
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
 
 var instance
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -44,15 +45,16 @@ func set_scenario(scenario):
 			r.enemies = null
 		if not r.has("enemy_count"):
 			r.enemy_count = 0
-	
-	instance = load("res://Scenes/Maps/"+ result.map +".tscn").instance()
+
+	instance = load("res://Scenes/Maps/" + result.map + ".tscn").instance()
 	$Node2D.add_child(instance)
 	$Node2D.move_child(instance, 0)
-	
+
 	if not Engine.editor_hint:
 		$Node2D/RoundController.rounds = result.rounds
 		$Node2D/RoundController.NewRound()
 		$Node2D/RoundController.paths = get_tree().get_nodes_in_group("path")
+
 
 func _process(delta: float) -> void:
 	if Engine.editor_hint:
