@@ -125,7 +125,7 @@ func _on_Combine_area_area_entered(area):
 func _on_Combine_area_area_exited(area):
 	if area.is_in_group("Combine_Area"):
 		over_lapping_with_towers = false
-		combined = null
+		combined = ""
 
 
 func return_combined_tower(result):
