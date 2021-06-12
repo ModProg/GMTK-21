@@ -20,7 +20,7 @@ const textures = {
 const projectile = preload("res://Scenes/Projectile.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	texture = textures[element]
+	pass
 
 
 
@@ -40,7 +40,7 @@ func _physics_process(delta: float) -> void:
 			for target in targets:
 				var cdist =(position - target.get_global_transform().origin).length()
 				if(dist > cdist):
-					dist = cdist;
+					dist = cdist
 					current_target = weakref(target)
 			if current_target:
 				$ShootTimer.start()
@@ -52,9 +52,9 @@ func _physics_process(delta: float) -> void:
 				if targets.find(target) == -1:
 					current_target = null
 				else:
-					var target_position = target.get_global_transform().origin;
-					rotation = (target_position - position).angle()
-	
+					var target_position = target.get_global_transform().origin
+					var angle = (target_position - position).angle()
+					rotation=angle
 func _input(event: InputEvent) -> void:
 	if building && event is InputEventMouseButton && event.button_index == 1:
 		var tile_pos = tilemap.world_to_map(tilemap.get_local_mouse_position())
@@ -84,3 +84,6 @@ func _on_ShootTimer_timeout() -> void:
 			instance.target_ref = current_target
 			instance.element = element
 			get_parent().add_child(instance)
+
+func set_element_name(names):
+	return get(names)

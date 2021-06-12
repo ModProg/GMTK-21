@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Art/DeveloperArt.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/TowerTables.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/RoundController.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/UI.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/Tower.tscn" type="PackedScene" id=5]
 
 [sub_resource type="TileSet" id=1]
 0/name = "Way"
@@ -64,9 +64,10 @@ _data = {
 [node name="Node" type="Node"]
 
 [node name="UIContainer" parent="." instance=ExtResource( 4 )]
-margin_left = 50.0
-margin_right = -50.0
-margin_bottom = -20.0
+margin_left = 45.7622
+margin_top = 111.072
+margin_right = -54.2378
+margin_bottom = 611.072
 
 [node name="Node2D" type="Node2D" parent="."]
 
@@ -87,8 +88,6 @@ script = ExtResource( 3 )
 
 [node name="Towers" type="Node" parent="Node2D"]
 
-[node name="Tower" parent="Node2D/Towers" instance=ExtResource( 5 )]
-
 [node name="Paths" type="Node" parent="Node2D"]
 
 [node name="Path0" type="Path2D" parent="Node2D/Paths" groups=[
@@ -100,6 +99,13 @@ curve = SubResource( 2 )
 "path",
 ]]
 curve = SubResource( 3 )
+
+[node name="TowerTables" parent="." instance=ExtResource( 2 )]
+margin_left = 407.542
+margin_top = -44.1559
+margin_right = 1367.54
+margin_bottom = 180.844
+TowerNodepath = NodePath("../Node2D/Towers")
 
 [connection signal="timeout" from="Node2D/RoundController/RoundTimer" to="Node2D/RoundController" method="NewRound"]
 [connection signal="timeout" from="Node2D/RoundController/SpawnTimer" to="Node2D/RoundController" method="SpawnEnemy"]

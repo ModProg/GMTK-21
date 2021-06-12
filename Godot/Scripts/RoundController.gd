@@ -45,7 +45,17 @@ func NewRound():
 	spawnTimer.start(spawnTime)
 	cur_enemies = enemies
 	roundText.text = 'Round: ' + str(currentRound) + ' / ' + str(maxRound)
-	
+
+func _unhandled_input(event):
+	if event.is_action_pressed("ui_accept"):
+		pass
+
+func choose(Arr:Array):
+	Arr.shuffle()
+	return Arr.front()
+
+
+
 func Damage(dmg):
 	cur_health -= dmg
 	if cur_health == 0:
