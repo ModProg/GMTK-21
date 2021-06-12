@@ -32,9 +32,45 @@ func _physics_process(delta: float) -> void:
 
 func _on_Area2D_area_entered(area: Area2D) -> void:
 	if area.is_in_group("projectile"):
-		print(area)
+		# Getting projectile reference
+		var projectile = area.get_parent()
+		var damage = 5 # Default is low
+		
+		# Same element no damage
+		if projectile.element == element:
+			damage = 0
+		else:
+			# What element is the enemy?
+			match projectile.element:
+				0: # WATER
+					match projectile.element:
+						2: # MEDIUM DAMAGE
+							damage = 10
+						3: # HIGH DAMAGE
+							damage = 20
+				1: # AIR
+					match projectile.element:
+						2: # HIGH DAMAGE
+							damage = 20
+						3: # MEDIUM DAMAGE
+							damage = 10
+				2: # EARTH
+					match projectile.element:
+						0: # HIGH DAMAGE
+							damage = 20
+						1: # MEDIUM DAMAGE
+							damage = 10
+				3: # FIRE
+					match projectile.element:
+						0: # MEDIUM DAMAGE
+							damage = 10
+						1: # HIGH DAMAGE
+							damage = 20
+		
+		# Destroy the projectile
 		area.get_parent().queue_free()
-		health -= 10
+		
+		health -= damage
 		if health <= 0:
 			queue_free()
 		$Sprite.modulate = Color.darkgray
