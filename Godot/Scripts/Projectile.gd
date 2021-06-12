@@ -1,16 +1,15 @@
 extends Sprite
 
-enum Element { Water, Air, Earth, Fire }
-export (Element) var element = Element.Water
+export (String) var element = "Water"
 export var speed = 200
 
 var target_ref: WeakRef = null
 
 const textures = {
-	Element.Water: preload("res://Art/Projectiles/Water Projectile.tres"),
-	Element.Air: preload("res://Art/Projectiles/Air Projectile.tres"),
-	Element.Earth: preload("res://Art/Projectiles/Earth Projectile.tres"),
-	Element.Fire: preload("res://Art/Projectiles/Fire Projectile.tres"),
+	"Water": preload("res://Art/Projectiles/Water Projectile.tres"),
+	"Air": preload("res://Art/Projectiles/Air Projectile.tres"),
+	"Earth": preload("res://Art/Projectiles/Earth Projectile.tres"),
+	"Fire": preload("res://Art/Projectiles/Fire Projectile.tres"),
 }
 
 

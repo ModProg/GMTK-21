@@ -10,11 +10,12 @@ region = Rect2( 0, 16, 8, 8 )
 [sub_resource type="CircleShape2D" id=2]
 radius = 24.0
 
-[node name="Tower" type="Sprite"]
+[node name="Tower" type="Sprite" groups=[
+"Tower",
+]]
 scale = Vector2( 8, 8 )
 texture = SubResource( 1 )
 script = ExtResource( 2 )
-element = 1
 building = true
 
 [node name="Area2D" type="Area2D" parent="."]
