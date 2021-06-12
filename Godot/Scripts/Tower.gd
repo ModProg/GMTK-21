@@ -10,21 +10,21 @@ onready var tile_map = $"../Map/TileMap"
 var targets = []
 var current_target: WeakRef
 var game_controller: GameController
-var placed=false
-var over_lapping_with_towers=false
-var combined=""
+var placed = false
+var over_lapping_with_towers = false
+var combined = ""
 
 const textures = {
 	"Water": preload("res://Art/Towers/Water Tower.tres"),
 	"Air": preload("res://Art/Towers/Air Tower.tres"),
 	"Earth": preload("res://Art/Towers/Earth Tower.tres"),
 	"Fire": preload("res://Art/Towers/Fire Tower.tres"),
-	"Wood":1,
-	"Steam":2,
-	"Sand":3,
-	"Blue_Fire":4,
-	"Lava":5,
-	"Ice":6,
+	"Wood": 1,
+	"Steam": 2,
+	"Sand": 3,
+	"Blue_Fire": 4,
+	"Lava": 5,
+	"Ice": 6,
 }
 const projectile = preload("res://Scenes/Projectile.tscn")
 
@@ -47,8 +47,8 @@ func _physics_process(delta: float) -> void:
 			position = get_global_mouse_position()
 			modulate = Color.black
 			if Input.is_action_just_released("Click"):
-				if combined!="":
-					var result=element+combined
+				if combined != "":
+					var result = element + combined
 					on_combining(return_combined_tower(result))
 				queue_free()
 	else:
@@ -89,6 +89,7 @@ func _on_Area2D_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemy"):
 		targets.append(area.get_parent())
 
+
 func _on_Area2D_area_exited(area: Area2D) -> void:
 	if area.is_in_group("enemy"):
 		targets.erase(area.get_parent())
@@ -105,42 +106,46 @@ func _on_ShootTimer_timeout() -> void:
 			instance.element = element
 			get_parent().add_child(instance)
 
+
 func _unhandled_input(event):
-	if event.is_action_released("Click") && combined!="":
-		var result=element+combined
+	if event.is_action_released("Click") && combined != "":
+		var result = element + combined
 		print(result)
 
 
 #when other tower enters
 func _on_Combine_area_area_entered(area):
-	var parent=area.get_parent()
+	var parent = area.get_parent()
 	if area.is_in_group("Combine_Area"):
-		over_lapping_with_towers=true
-		combined=parent.element
+		over_lapping_with_towers = true
+		combined = parent.element
+
 
 #when other towers exits
 func _on_Combine_area_area_exited(area):
 	if area.is_in_group("Combine_Area"):
-		over_lapping_with_towers=false
-		combined=null
+		over_lapping_with_towers = false
+		combined = null
+
 
 func return_combined_tower(result):
-	if result in ["WaterAir","AirWater"]:
+	if result in ["WaterAir", "AirWater"]:
 		return "Ice"
-	elif result in ["WaterEarth","EarthWater"]:
+	elif result in ["WaterEarth", "EarthWater"]:
 		return "Wood"
-	elif result in ["WaterFire","FireWater"]:
+	elif result in ["WaterFire", "FireWater"]:
 		return "Steam"
-	elif result in ["AirEarth","EarthAir"]:
+	elif result in ["AirEarth", "EarthAir"]:
 		return "Sand"
-	elif result in ["AirFire","FireAir"]:
+	elif result in ["AirFire", "FireAir"]:
 		return "Blue_Fire"
-	elif result in ["EarthFire","FireEarth"]:
+	elif result in ["EarthFire", "FireEarth"]:
 		return "Lava"
 	else:
 		return null
 
+
 func on_combining(combined_thing):
 	#element=combined_thing
 	#texture=textures[combined_thing]
-	print("****NOW I AM A"+str(combined_thing)+"TOWER I FEEL STRONG****")
+	print("****NOW I AM A" + str(combined_thing) + "TOWER I FEEL STRONG****")
