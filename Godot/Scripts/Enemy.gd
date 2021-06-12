@@ -74,7 +74,7 @@ func _on_Area2D_area_entered(area: Area2D) -> void:
 
 		# Destroy the projectile
 		print(area)
-		health -= 10 
+		health -= 10
 		area.get_parent().queue_free()
 		if health <= 0:
 			queue_free()

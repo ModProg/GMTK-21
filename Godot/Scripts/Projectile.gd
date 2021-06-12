@@ -6,10 +6,9 @@ export var speed = 200
 
 var target_ref: WeakRef = null
 
-
 #kinematics
-var velocity=0.0
-var target_positon=Vector2()
+var velocity = Vector2.ZERO
+var target_positon = Vector2()
 var distance
 var final_pos
 
@@ -32,9 +31,10 @@ func _physics_process(delta: float) -> void:
 	if target:
 		velocity = (target.get_global_transform().origin - position).normalized() * speed
 		position += velocity * delta
-		physic_according_to_element(element,target)
+		physic_according_to_element(element, target)
 	else:
 		queue_free()
+
 
 func assgin_enum_value(param):
 	match param:
@@ -48,9 +48,10 @@ func assgin_enum_value(param):
 			element = Element.Earth
 	texture = textures[element]
 
-func physic_according_to_element(element,target):
-	final_pos=(target).get_global_transform().origin
-	distance=self.position.distance_to(final_pos)
+
+func physic_according_to_element(element, target):
+	final_pos = (target).get_global_transform().origin
+	distance = self.position.distance_to(final_pos)
 	match element:
 		"Water":
 			#I think of making to spawn a area 2d when it reaches the tileset
@@ -61,20 +62,20 @@ func physic_according_to_element(element,target):
 			#change a target type to time based
 			pass
 		"Fire":
-			if distance<90:
+			if distance < 90:
 				$Animation_player.play("Fire")
 				#play a boom animation
 			#play a animation that explodes
 		"Earth":
 			#calput stuff so that we can make user to fake 3d like in art making the 
 			#rock to rise and then we can put that animation here
-			var time=distance/velocity
+			var time = distance / velocity.length()
 			#play assending animation
-			yield(get_tree().create_timer(time/2),"timeout")
+			yield(get_tree().create_timer(time / 2), "timeout")
 			#play decending animation
 
 
 func _on_Destroyarea_area_entered(area):
 	if area.is_in_group("enemy"):
-		var area_parent=area.get_parent().get_parent()
-		area_parent.health-=20
+		var area_parent = area.get_parent().get_parent()
+		area_parent.health -= 20
