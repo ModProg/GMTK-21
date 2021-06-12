@@ -74,8 +74,8 @@ func _on_Area2D_area_entered(area: Area2D) -> void:
 
 		# Destroy the projectile
 		print(area)
+		health -= 10 
 		area.get_parent().queue_free()
-		health -= 10
 		if health <= 0:
 			queue_free()
 		$Sprite.modulate = Color.darkgray
