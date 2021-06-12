@@ -13,9 +13,6 @@ var instance
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	set_scenario(_scenario)
-	var tower = preload("res://Scenes/Tower.tscn").instance()
-	tower.element = JSONElement.water
-	$Node2D/Towers.add_child(tower)
 
 
 func set_scenario(scenario):
