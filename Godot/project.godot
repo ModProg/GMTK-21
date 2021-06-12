@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Reference",
+"class": "Element",
+"language": "GDScript",
+"path": "res://Scripts/Utils/Element.gd"
+}, {
 "base": "Node",
 "class": "GameController",
 "language": "GDScript",
@@ -30,6 +35,7 @@ _global_script_classes=[ {
 "path": "res://Scripts/UIController.gd"
 } ]
 _global_script_class_icons={
+"Element": "",
 "GameController": "",
 "Music": "",
 "Round": "",

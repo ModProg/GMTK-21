@@ -9,7 +9,9 @@ export (String, FILE, "*.json") var _scenario
 # var b: String = "text"
 
 var map_instance: Node2D
-onready var towers = $Towers
+var tile_map: TileMap
+var towers: Dictionary = {}
+onready var tower_parrent = $Towers
 onready var ui_controller: UIController = $UI
 onready var round_controller = $RoundController
 onready var music_player: AudioStreamPlayer = $MusicPlayer
@@ -17,12 +19,13 @@ onready var music_player: AudioStreamPlayer = $MusicPlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	ui_controller.game_controller = self
-	ui_controller.start()
-	round_controller.ui_controller = ui_controller
-	round_controller.game_controller = self
-	set_scenario(_scenario)
-	music_player.play()
+	if not Engine.editor_hint:
+		ui_controller.game_controller = self
+		ui_controller.start()
+		round_controller.ui_controller = ui_controller
+		round_controller.game_controller = self
+		set_scenario(_scenario)
+		music_player.play()
 
 
 func play_music(music: AudioStream):
@@ -46,7 +49,7 @@ func set_scenario(scenario):
 	add_child(map_instance)
 	move_child(map_instance, 0)
 
-	var tile_map: TileMap = map_instance.get_node("TileMap")
+	tile_map = map_instance.get_node("TileMap")
 	var map_size = tile_map.to_global(tile_map.map_to_world(tile_map.get_used_rect().size))
 	var vp_size = get_viewport().size
 	map_instance.position = (vp_size - map_size) / 2
@@ -66,7 +69,18 @@ func set_scenario(scenario):
 
 func add_tower(tower: Node):
 	tower.game_controller = self
-	towers.add_child(tower)
+	tower.tile_map = tile_map
+	tower_parrent.add_child(tower)
+
+
+func set_tower(pos: Vector2, tower: Node):
+	towers[pos] = tower
+
+
+func get_tower(pos: Vector2) -> Node:
+	if towers.has(pos):
+		return towers[pos]
+	return null
 
 
 func _process(delta: float) -> void:

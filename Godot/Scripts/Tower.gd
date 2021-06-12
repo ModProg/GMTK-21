@@ -1,30 +1,26 @@
 extends Sprite
 
-enum combined_element { Water_Air, Earth_Water, Earth_Fire, Earth_Air, Fire_Water, Air_Fire }
-
 export (String) var element = "Fire"
 export var building = false
 
-onready var tile_map = $"../Map/TileMap"
+var tile_map
 
 var targets = []
 var current_target: WeakRef
 var game_controller: GameController
-var placed = false
-var over_lapping_with_towers = false
-var combined = ""
+var ex_tower: Node2D
 
 const textures = {
 	"Water": preload("res://Art/Towers/Water Tower.tres"),
 	"Air": preload("res://Art/Towers/Air Tower.tres"),
 	"Earth": preload("res://Art/Towers/Earth Tower.tres"),
 	"Fire": preload("res://Art/Towers/Fire Tower.tres"),
-	"Wood": 1,
-	"Steam": 2,
-	"Sand": 3,
-	"Blue_Fire": 4,
-	"Lava": 5,
-	"Ice": 6,
+	"Wood": preload("res://Art/Towers/Wood Tower.tres"),
+	"Steam": preload("res://Art/Towers/Steam Tower.tres"),
+	"Sand": preload("res://Art/Towers/Sand Tower.tres"),
+	"Blue_Fire": preload("res://Art/Towers/Blue_Fire Tower.tres"),
+	"Lava": preload("res://Art/Towers/Lava Tower.tres"),
+	"Ice": preload("res://Art/Towers/Ice Tower.tres"),
 }
 const projectile = preload("res://Scenes/Projectile.tscn")
 
@@ -34,8 +30,41 @@ func _ready() -> void:
 	pass
 
 
+func try_place() -> bool:
+	# reset ex_tower if existing
+	if ex_tower:
+		ex_tower.visible = true
+		ex_tower = null
+	var tile_pos = tile_map.world_to_map(tile_map.get_local_mouse_position())
+	if tile_map.get_cellv(tile_pos) == 1:
+		var l_ex_tower = game_controller.get_tower(tile_pos)
+		if l_ex_tower:
+			var combined = Element.combine(l_ex_tower.element, element)
+			if ! combined.empty():
+				l_ex_tower.element = combined
+				l_ex_tower.texture = textures[combined]
+				queue_free()
+				return true
+			else:
+				queue_free()
+				return false
+		else:
+			game_controller.set_tower(tile_pos, self)
+			global_position = tile_map.to_global(
+				tile_map.map_to_world(tile_pos) + tile_map.cell_size / 2
+			)
+			building = false
+			return true
+	queue_free()
+	return false
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
+	if ex_tower:
+		ex_tower.visible = true
+		ex_tower = null
+		texture = textures[element]
 	if building:
 		var tile_pos = tile_map.world_to_map(tile_map.get_local_mouse_position())
 		if tile_map.get_cellv(tile_pos) == 1:
@@ -43,14 +72,18 @@ func _physics_process(delta: float) -> void:
 				tile_map.map_to_world(tile_pos) + tile_map.cell_size / 2
 			)
 			modulate = Color.white
+			ex_tower = game_controller.get_tower(tile_pos)
+			if ex_tower:
+				var combined = Element.combine(ex_tower.element, element)
+				if ! combined.empty():
+					ex_tower.visible = false
+					texture = textures[combined]
+				else:
+					position = get_global_mouse_position()
+					modulate = Color.black
 		else:
 			position = get_global_mouse_position()
 			modulate = Color.black
-			if Input.is_action_just_released("Click"):
-				if combined != "":
-					var result = element + combined
-					on_combining(return_combined_tower(result))
-				queue_free()
 	else:
 		if ! current_target:
 			var dist = INF
@@ -70,19 +103,8 @@ func _physics_process(delta: float) -> void:
 					current_target = null
 				else:
 					var target_position = target.get_global_transform().origin
-					var target_rotation=(target_position-global_position).angle()
-					rotation=lerp_angle(rotation,target_rotation,0.1)
-
-
-func _input(event: InputEvent) -> void:
-	if building && event is InputEventMouseButton && event.button_index == 1:
-		var tile_pos = tile_map.world_to_map(tile_map.get_local_mouse_position())
-		if tile_map.get_cellv(tile_pos) == 1:
-			global_position = tile_map.to_global(
-				tile_map.map_to_world(tile_pos) + tile_map.cell_size / 2
-			)
-			tile_map.set_cellv(tile_pos, 2)
-			building = false
+					var target_rotation = (target_position - global_position).angle()
+					rotation = lerp_angle(rotation, target_rotation, 0.1)
 
 
 # This needs to also run while building 
@@ -106,47 +128,3 @@ func _on_ShootTimer_timeout() -> void:
 			instance.target_ref = current_target
 			instance.element = element
 			get_parent().add_child(instance)
-
-
-func _unhandled_input(event):
-	if event.is_action_released("Click") && combined != "":
-		var result = element + combined
-		print(result)
-
-
-#when other tower enters
-func _on_Combine_area_area_entered(area):
-	var parent = area.get_parent()
-	if area.is_in_group("Combine_Area"):
-		over_lapping_with_towers = true
-		combined = parent.element
-
-
-#when other towers exits
-func _on_Combine_area_area_exited(area):
-	if area.is_in_group("Combine_Area"):
-		over_lapping_with_towers = false
-		combined = ""
-
-
-func return_combined_tower(result):
-	if result in ["WaterAir", "AirWater"]:
-		return "Ice"
-	elif result in ["WaterEarth", "EarthWater"]:
-		return "Wood"
-	elif result in ["WaterFire", "FireWater"]:
-		return "Steam"
-	elif result in ["AirEarth", "EarthAir"]:
-		return "Sand"
-	elif result in ["AirFire", "FireAir"]:
-		return "Blue_Fire"
-	elif result in ["EarthFire", "FireEarth"]:
-		return "Lava"
-	else:
-		return null
-
-
-func on_combining(combined_thing):
-	#element=combined_thing
-	#texture=textures[combined_thing]
-	print("****NOW I AM A" + str(combined_thing) + "TOWER I FEEL STRONG****")

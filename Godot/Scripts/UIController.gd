@@ -20,7 +20,9 @@ var game_controller
 
 
 func start() -> void:
-	towerTables.game_controller = game_controller
+	for ec in get_tree().get_nodes_in_group("element_card"):
+		ec.game_controller = game_controller
+	#towerTables.game_controller = game_controller
 
 
 func set_message(value: String):
