@@ -70,7 +70,8 @@ func _physics_process(delta: float) -> void:
 					current_target = null
 				else:
 					var target_position = target.get_global_transform().origin
-					rotation = (target_position - position).angle()
+					var target_rotation=(target_position-global_position).angle()
+					rotation=lerp_angle(rotation,target_rotation,0.1)
 
 
 func _input(event: InputEvent) -> void:
