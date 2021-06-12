@@ -6,7 +6,9 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4.00002, 3.99998 )
 
-[node name="Enemy" type="PathFollow2D"]
+[node name="Enemy" type="PathFollow2D" groups=[
+"enemy_parent",
+]]
 position = Vector2( 96, 224 )
 rotation = -3.85397e-06
 rotate = false

@@ -2,6 +2,18 @@
   "map": "Scrup",
   "rounds": [
     {
+      "enemy_count": 1,
+      "round_time": 5,
+      "spawn_time": 0.1
+    },
+    {
+      "enemy_count": 500,
+      "round_time": 60,
+      "spawn_time": 0.1,
+      "initial_spawn_time": 2,
+      "retry": true
+    },
+    {
       "enemy_count": 500,
       "round_time": 60,
       "spawn_time": 0.1
