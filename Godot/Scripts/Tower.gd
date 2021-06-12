@@ -9,6 +9,7 @@ onready var tilemap = $"../../Map/TileMap"
 
 var targets = []
 var current_target: WeakRef
+var game_controller: GameController
 
 const textures = {
 	Element.Water: preload("res://Art/Towers/Water Tower.tres"),
@@ -29,10 +30,13 @@ func _physics_process(delta: float) -> void:
 	if building:
 		var tile_pos = tilemap.world_to_map(tilemap.get_local_mouse_position())
 		if tilemap.get_cellv(tile_pos) == 1:
-			global_position = tilemap.to_global(tilemap.to_global(tile_pos) + tilemap.cell_size / 2)
+			global_position = tilemap.to_global(
+				tilemap.map_to_world(tile_pos) + tilemap.cell_size / 2
+			)
 			modulate = Color.white
 		else:
-			global_position = get_global_mouse_position()
+			print()
+			position = get_global_mouse_position()
 			modulate = Color.black
 	else:
 		if ! current_target:
@@ -60,7 +64,9 @@ func _input(event: InputEvent) -> void:
 	if building && event is InputEventMouseButton && event.button_index == 1:
 		var tile_pos = tilemap.world_to_map(tilemap.get_local_mouse_position())
 		if tilemap.get_cellv(tile_pos) == 1:
-			global_position = tilemap.to_global(tilemap.to_global(tile_pos) + tilemap.cell_size / 2)
+			global_position = tilemap.to_global(
+				tilemap.map_to_world(tile_pos) + tilemap.cell_size / 2
+			)
 			tilemap.set_cellv(tile_pos, 2)
 			building = false
 

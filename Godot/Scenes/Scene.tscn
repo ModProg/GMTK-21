@@ -1,28 +1,21 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Scripts/GameController.gd" type="Script" id=1]
-[ext_resource path="res://Scripts/RoundController.gd" type="Script" id=2]
-[ext_resource path="res://Scenes/UI.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scripts/RoundController.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/GameController.gd" type="Script" id=2]
 
 [node name="Node" type="Node"]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 _scenario = "res://Scenarios/Scrap.json"
 
 [node name="RoundController" type="Node" parent="."]
 pause_mode = 2
-script = ExtResource( 2 )
+script = ExtResource( 1 )
 
 [node name="RoundTimer" type="Timer" parent="RoundController"]
 
 [node name="SpawnTimer" type="Timer" parent="RoundController"]
 
 [node name="Towers" type="Node" parent="."]
-
-[node name="UI" parent="." instance=ExtResource( 4 )]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = 0.0
-margin_bottom = 0.0
 
 [connection signal="timeout" from="RoundController/RoundTimer" to="RoundController" method="NewRound"]
 [connection signal="timeout" from="RoundController/SpawnTimer" to="RoundController" method="SpawnEnemy"]

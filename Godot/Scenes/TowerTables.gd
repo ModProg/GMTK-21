@@ -1,8 +1,7 @@
 extends Control
-export var TowerNodepath: NodePath
 const Tower_scene = preload("res://Scenes/Tower.tscn")
 
-onready var tower = get_node(TowerNodepath)
+var game_controller: GameController
 
 
 func _ready():
@@ -25,4 +24,4 @@ func on_button_pressed(button):
 			element = Tower_instance.Element.Earth
 	Tower_instance.element = element
 	Tower_instance.texture = Tower_instance.textures[element]
-	tower.add_child(Tower_instance)
+	game_controller.add_tower(Tower_instance)

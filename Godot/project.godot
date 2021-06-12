@@ -8,6 +8,22 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "GameController",
+"language": "GDScript",
+"path": "res://Scripts/GameController.gd"
+}, {
+"base": "Control",
+"class": "UIController",
+"language": "GDScript",
+"path": "res://Scripts/UIController.gd"
+} ]
+_global_script_class_icons={
+"GameController": "",
+"UIController": ""
+}
+
 [application]
 
 config/name="GMTK-21"

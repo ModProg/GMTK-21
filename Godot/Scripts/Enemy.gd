@@ -35,8 +35,8 @@ func _on_Area2D_area_entered(area: Area2D) -> void:
 		# Getting projectile reference
 		var projectile = area.get_parent()
 		$Sprite.modulate = Color.lightgray
-		var damage = 5 # Default is low
-		
+		var damage = 5  # Default is low
+
 		# Same element no damage
 		if projectile.element == element:
 			$Sprite.modulate = Color.white
@@ -44,42 +44,42 @@ func _on_Area2D_area_entered(area: Area2D) -> void:
 		else:
 			# What element is the enemy?
 			match projectile.element:
-				0: # WATER
+				0:  # WATER
 					match element:
-						2: # MEDIUM DAMAGE
+						2:  # MEDIUM DAMAGE
 							$Sprite.modulate = Color.yellow
 							damage = 10
-						3: # HIGH DAMAGE
+						3:  # HIGH DAMAGE
 							$Sprite.modulate = Color.red
 							damage = 20
-				1: # AIR
+				1:  # AIR
 					match element:
-						2: # HIGH DAMAGE
+						2:  # HIGH DAMAGE
 							$Sprite.modulate = Color.red
 							damage = 20
-						3: # MEDIUM DAMAGE
+						3:  # MEDIUM DAMAGE
 							$Sprite.modulate = Color.yellow
 							damage = 10
-				2: # EARTH
+				2:  # EARTH
 					match element:
-						0: # HIGH DAMAGE
+						0:  # HIGH DAMAGE
 							$Sprite.modulate = Color.red
 							damage = 20
-						1: # MEDIUM DAMAGE
+						1:  # MEDIUM DAMAGE
 							$Sprite.modulate = Color.yellow
 							damage = 10
-				3: # FIRE
+				3:  # FIRE
 					match element:
-						0: # MEDIUM DAMAGE
+						0:  # MEDIUM DAMAGE
 							$Sprite.modulate = Color.yellow
 							damage = 10
-						1: # HIGH DAMAGE
+						1:  # HIGH DAMAGE
 							$Sprite.modulate = Color.red
 							damage = 20
-		
+
 		# Destroy the projectile
 		area.get_parent().queue_free()
-		
+
 		health -= damage
 		if health <= 0:
 			queue_free()
