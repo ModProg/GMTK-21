@@ -4,21 +4,21 @@
     {
       "help_text": "This is an enemy, it will run towards your base and damage it",
       "enemies": ["fire"],
-      "turret_count": 0,
+      "card_count": 0,
       "round_time": 5,
       "spawn_time": 2
     },
     {
       "help_text": "Now you'll have something to defend yourself against fire. \nYou guessed it, {{Water}}.",
       "enemy_distribution": { "fire": 5 },
-      "turrets": { "water": 1 },
+      "cards": { "water": 1 },
       "round_time": 10,
       "spawn_time": 1,
       "initial_spawn_time": 5
     },
     {
       "help_text": "This time your enemy is {{Air}}, I won't tell you what tower to use, that's something you can try for yourself.",
-      "turret_count": 1,
+      "card_count": 1,
       "enemy_count": 4,
       "round_time": 10,
       "spawn_time": 1,

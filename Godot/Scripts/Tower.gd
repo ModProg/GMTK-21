@@ -36,7 +36,7 @@ func try_place() -> bool:
 		ex_tower.visible = true
 		ex_tower = null
 	var tile_pos = tile_map.world_to_map(tile_map.get_local_mouse_position())
-	if tile_map.get_cellv(tile_pos) == 1:
+	if Tile.is_build_able(tile_map.get_cellv(tile_pos)):
 		var l_ex_tower = game_controller.get_tower(tile_pos)
 		if l_ex_tower:
 			var combined = Element.combine(l_ex_tower.element, element)
@@ -67,7 +67,7 @@ func _physics_process(delta: float) -> void:
 		texture = textures[element]
 	if building:
 		var tile_pos = tile_map.world_to_map(tile_map.get_local_mouse_position())
-		if tile_map.get_cellv(tile_pos) == 1:
+		if Tile.is_build_able(tile_map.get_cellv(tile_pos)):
 			global_position = tile_map.to_global(
 				tile_map.map_to_world(tile_pos) + tile_map.cell_size / 2
 			)
