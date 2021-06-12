@@ -28,6 +28,5 @@ shape = SubResource( 1 )
 
 [node name="FlashTimer" type="Timer" parent="."]
 wait_time = 0.1
-
 [connection signal="area_entered" from="Sprite/Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="timeout" from="FlashTimer" to="." method="_on_FlashTimer_timeout"]
