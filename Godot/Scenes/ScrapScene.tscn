@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Art/DeveloperArt.png" type="Texture" id=1]
-[ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/RoundController.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/UI.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Tower.tscn" type="PackedScene" id=5]
@@ -75,8 +74,6 @@ tile_data = PoolIntArray( 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 0, 0, 
 [node name="RoundController" type="Path2D" parent="Node2D"]
 curve = SubResource( 2 )
 script = ExtResource( 3 )
-
-[node name="Enemy" parent="Node2D/RoundController" instance=ExtResource( 2 )]
 
 [node name="Towers" type="Node2D" parent="Node2D"]
 

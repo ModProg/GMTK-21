@@ -3,8 +3,9 @@ extends PathFollow2D
 enum Element {Water, Air, Earth, Fire}
 
 export(Element) var element = Element.Water
+export var damage = 10;
 export var speed = 100;
-export var health = 100;
+export var health = 25;
 
 const textures = {
 	Element.Water: preload("res://Art/Enemies/Water Enemy.tres"),
@@ -22,6 +23,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	offset+=speed*delta
 	if unit_offset==1:
+		get_parent().Damage(damage)
 		queue_free()
 
 
