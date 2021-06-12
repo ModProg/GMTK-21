@@ -60,7 +60,7 @@ func _resort():
 		angle = 0
 		total_angle = 0
 	else:
-		angle = total_angle / (children.size() - 1) 
+		angle = total_angle / (children.size() - 1)
 	var current_angle = -total_angle / 2
 	for child in children:
 		_put_child_at_angle(child, radius, root, current_angle)

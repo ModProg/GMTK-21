@@ -1,13 +1,13 @@
 extends PathFollow2D
 
-enum Element {Water, Air, Earth, Fire}
+enum Element { Water, Air, Earth, Fire }
 
-export(Element) var element = Element.Water
-export var damage = 10;
-export var speed = 100;
-export var health = 25;
+export (Element) var element = Element.Water
+export var damage = 10
+export var speed = 100
+export var health = 25
 
-var round_controller;
+var round_controller
 
 const textures = {
 	Element.Water: preload("res://Art/Enemies/Water Enemy.tres"),
@@ -15,20 +15,19 @@ const textures = {
 	Element.Earth: preload("res://Art/Enemies/Earth Enemy.tres"),
 	Element.Fire: preload("res://Art/Enemies/Fire Enemy.tres"),
 }
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$Sprite.texture = textures[element]
 
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
-	offset+=speed*delta
-	if unit_offset==1:
+	offset += speed * delta
+	if unit_offset == 1:
 		round_controller.Damage(damage)
 		queue_free()
-
-
 
 
 func _on_Area2D_area_entered(area: Area2D) -> void:

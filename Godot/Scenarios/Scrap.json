@@ -1,0 +1,27 @@
+{
+  "map": "Scrap",
+  "rounds": [
+    {
+      "enemies": [
+        "fire", "water", "water", "water"
+      ],
+      "round_time": 10,
+      "spawn_time": 1
+    },
+    {
+      "enemy_distribution": {
+        "fire": 5,
+        "water": 2,
+        "air": 3,
+        "earth": 4 
+      },
+      "round_time": 10,
+      "spawn_time": 1
+    },
+    {
+      "enemy_count": 4,
+      "round_time": 10,
+      "spawn_time": 1
+    }
+  ]
+}

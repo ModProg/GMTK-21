@@ -1,5 +1,14 @@
 extends Node
 
+enum Element { Water, Air, Earth, Fire }
+
+class Round:
+	var enemy_count: int
+	var enemy_distribution: Dictionary
+	var enemies: Array 
+	var round_time: float
+	var spawn_time: float
+
 # Round settings
 onready var roundText = $"../../UIContainer/Round Text"
 onready var healthText = $"../../UIContainer/Health Text"
@@ -8,52 +17,50 @@ onready var spawnTimer = $SpawnTimer
 onready var roundTimer = $RoundTimer
 
 const enemyScene = preload("res://Scenes/Enemy.tscn")
-const maxRound = 10
-const roundTime = 10
-const spawnTime = 0.75
 const health = 100
-const enemies = 5
 
-var currentRound = -1
-var cur_enemies = 0
-var cur_health = 100
-
+var rounds: Array
+var cur_round#: Round
+var cur_health = health
 var end = false
 
-func _ready():
-	NewRound()
 
 func SpawnEnemy():
-	print("hi")
-	if enemies == 0:
-		spawnTimer.stop()
-		return
-	cur_enemies -= 1
+	var e
+	if cur_round.enemies:
+		if cur_round.enemies.size() <= 0:
+			return spawnTimer.stop()
+		e = cur_round.enemies.pop_front()
+	elif cur_round.enemy_distribution:
+		var keys = cur_round.enemy_distribution.keys()
+		if keys.size() == 0:
+			return spawnTimer.stop()
+		e = keys[rand_range(0,keys.size())]
+		if cur_round.enemy_distribution[e] == 0:
+			cur_round.enemy_distribution.erase(e)
+			return SpawnEnemy()
+		cur_round.enemy_distribution[e] -= 1
+	else:
+		if cur_round.enemy_count <= 0:
+			return spawnTimer.stop()
+		cur_round.enemy_count -= 1
+		e = Element.values()[rand_range(0,Element.keys().size())]
+	
 	var enemy = enemyScene.instance()
-	enemy.element = int(floor(rand_range(0,4)))
+	enemy.element = e
 	enemy.round_controller = self
-	print(paths)
-	paths[rand_range(0,paths.size())].add_child(enemy)
+	paths[rand_range(0, paths.size())].add_child(enemy)
+
 
 func NewRound():
-	if currentRound == maxRound:
+	if rounds.size()==0:
 		end = true
 		return
-	
-	currentRound += 1
-	roundTimer.start(roundTime)
-	spawnTimer.start(spawnTime)
-	cur_enemies = enemies
-	roundText.text = 'Round: ' + str(currentRound) + ' / ' + str(maxRound)
 
-func _unhandled_input(event):
-	if event.is_action_pressed("ui_accept"):
-		pass
-
-func choose(Arr:Array):
-	Arr.shuffle()
-	return Arr.front()
-
+	cur_round = rounds.pop_front()
+	roundTimer.start(cur_round.round_time)
+	spawnTimer.start(cur_round.spawn_time)
+	roundText.text = 'Rounds remaining: ' + str(rounds.size())
 
 
 func Damage(dmg):

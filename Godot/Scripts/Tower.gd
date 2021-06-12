@@ -1,15 +1,14 @@
 extends Sprite
 
+enum Element { Water, Air, Earth, Fire }
 
-enum Element {Water, Air, Earth, Fire}
+export (Element) var element = Element.Fire
+export var building = false
 
-export(Element) var element = Element.Fire
-export var building = false;
+onready var tilemap = $"../../Map/TileMap"
 
-onready var tilemap = $"../../TileMap";
-
-var targets = [];
-var current_target: WeakRef;
+var targets = []
+var current_target: WeakRef
 
 const textures = {
 	Element.Water: preload("res://Art/Towers/Water Tower.tres"),
@@ -18,10 +17,11 @@ const textures = {
 	Element.Fire: preload("res://Art/Towers/Fire Tower.tres"),
 }
 const projectile = preload("res://Scenes/Projectile.tscn")
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
-
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -29,13 +29,13 @@ func _physics_process(delta: float) -> void:
 	if building:
 		var tile_pos = tilemap.world_to_map(tilemap.get_local_mouse_position())
 		if tilemap.get_cellv(tile_pos) == 1:
-			global_position = tilemap.to_global(tilemap.to_global(tile_pos)+tilemap.cell_size/2)
+			global_position = tilemap.to_global(tilemap.to_global(tile_pos) + tilemap.cell_size / 2)
 			modulate = Color.white
 		else:
 			global_position = get_global_mouse_position()
 			modulate = Color.black
 	else:
-		if !current_target:
+		if ! current_target:
 			var dist = INF
 			for target in targets:
 				var cdist =(position - target.get_global_transform().origin).length()
@@ -46,22 +46,23 @@ func _physics_process(delta: float) -> void:
 				$ShootTimer.start()
 		if current_target:
 			var target = current_target.get_ref()
-			if(!target):
+			if ! target:
 				current_target = null
 			else:
 				if targets.find(target) == -1:
 					current_target = null
 				else:
 					var target_position = target.get_global_transform().origin
-					var angle = (target_position - position).angle()
-					rotation=angle
+					rotation = (target_position - position).angle()
+
+
 func _input(event: InputEvent) -> void:
 	if building && event is InputEventMouseButton && event.button_index == 1:
 		var tile_pos = tilemap.world_to_map(tilemap.get_local_mouse_position())
 		if tilemap.get_cellv(tile_pos) == 1:
-			global_position = tilemap.to_global(tilemap.to_global(tile_pos)+tilemap.cell_size/2)
+			global_position = tilemap.to_global(tilemap.to_global(tile_pos) + tilemap.cell_size / 2)
 			tilemap.set_cellv(tile_pos, 2)
-			building = false;
+			building = false
 
 
 # This needs to also run while building 
