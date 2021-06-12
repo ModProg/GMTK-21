@@ -50,8 +50,8 @@ func _physics_process(delta: float) -> void:
 		if ! current_target:
 			var dist = INF
 			for target in targets:
-				var cdist =(position - target.get_global_transform().origin).length()
-				if(dist > cdist):
+				var cdist = (position - target.get_global_transform().origin).length()
+				if dist > cdist:
 					dist = cdist
 					current_target = weakref(target)
 			if current_target:
