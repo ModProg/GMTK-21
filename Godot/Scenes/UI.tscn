@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://addons/card_fan_container/card_fan_container.gd" type="Script" id=1]
 [ext_resource path="res://Art/Fonts/LinBiolinum_aRL.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Scenes/Card.tscn" type="PackedScene" id=3]
 
 [sub_resource type="StyleBoxFlat" id=1]
 border_width_left = 2
@@ -58,34 +59,24 @@ bow_spacing = 0.588
 padding = 0.157
 child_size = Vector2( 100, 200 )
 
-[node name="Panel" type="Panel" parent="CenterContainer/CardFanContainer"]
-margin_left = 140.114
-margin_top = 15.322
-margin_right = 240.114
-margin_bottom = 215.322
+[node name="Panel" parent="CenterContainer/CardFanContainer" instance=ExtResource( 3 )]
 rect_rotation = -17.6955
-rect_pivot_offset = Vector2( 50, 200 )
 
-[node name="Panel2" type="Panel" parent="CenterContainer/CardFanContainer"]
+[node name="Panel2" parent="CenterContainer/CardFanContainer" instance=ExtResource( 3 )]
 margin_left = 179.753
 margin_top = 7.04314
 margin_right = 279.753
 margin_bottom = 207.043
 rect_rotation = -5.8985
-rect_pivot_offset = Vector2( 50, 200 )
 
-[node name="Panel3" type="Panel" parent="CenterContainer/CardFanContainer"]
+[node name="Panel3" parent="CenterContainer/CardFanContainer" instance=ExtResource( 3 )]
 margin_left = 220.247
 margin_top = 7.04314
 margin_right = 320.247
 margin_bottom = 207.043
 rect_rotation = 5.8985
-rect_pivot_offset = Vector2( 50, 200 )
 
-[node name="Panel4" type="Panel" parent="CenterContainer/CardFanContainer"]
+[node name="Panel4" parent="CenterContainer/CardFanContainer" instance=ExtResource( 3 )]
 margin_left = 259.886
-margin_top = 15.322
 margin_right = 359.886
-margin_bottom = 215.322
 rect_rotation = 17.6955
-rect_pivot_offset = Vector2( 50, 200 )
