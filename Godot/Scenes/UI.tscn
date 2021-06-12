@@ -1,0 +1,125 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://addons/card_fan_container/card_fan_container.gd" type="Script" id=1]
+[ext_resource path="res://Art/Fonts/LinBiolinum_aRL.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Scenes/Card.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/UIController.gd" type="Script" id=4]
+[ext_resource path="res://Scenes/TowerTables.tscn" type="PackedScene" id=5]
+
+[sub_resource type="StyleBoxFlat" id=1]
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Theme" id=2]
+Panel/styles/panel = SubResource( 1 )
+
+[node name="Control" type="Control"]
+margin_right = 1920.0
+margin_bottom = 1080.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -624.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = 218.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Round Text" type="RichTextLabel" parent="MarginContainer"]
+margin_right = 604.0
+margin_bottom = 198.0
+custom_fonts/normal_font = ExtResource( 2 )
+custom_colors/default_color = Color( 1, 1, 1, 1 )
+text = "Rounds remainning 99"
+
+[node name="Health Text" type="RichTextLabel" parent="MarginContainer"]
+margin_right = 604.0
+margin_bottom = 198.0
+custom_fonts/normal_font = ExtResource( 2 )
+custom_colors/default_color = Color( 1, 1, 1, 1 )
+text = "
+Health 100"
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -736.0
+margin_top = -240.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TowerTables" parent="MarginContainer2" instance=ExtResource( 5 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 736.0
+margin_bottom = 240.0
+
+[node name="MarginContainer3" type="MarginContainer" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -300.0
+margin_right = 500.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer3"]
+margin_right = 500.0
+margin_bottom = 300.0
+
+[node name="CardFanContainer" type="Container" parent="MarginContainer3/CenterContainer"]
+margin_right = 500.0
+margin_bottom = 300.0
+rect_min_size = Vector2( 500, 300 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = SubResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+max_angle = 11.797
+bow_spacing = 0.24
+padding = 0.157
+child_size = Vector2( 100, 200 )
+
+[node name="Panel" parent="MarginContainer3/CenterContainer/CardFanContainer" instance=ExtResource( 3 )]
+margin_left = 126.974
+margin_top = 39.3674
+margin_right = 226.974
+margin_bottom = 239.367
+rect_rotation = -17.6955
+
+[node name="Panel2" parent="MarginContainer3/CenterContainer/CardFanContainer" instance=ExtResource( 3 )]
+margin_left = 175.31
+margin_top = 29.272
+margin_right = 275.31
+margin_bottom = 229.272
+rect_rotation = -5.8985
+
+[node name="Panel3" parent="MarginContainer3/CenterContainer/CardFanContainer" instance=ExtResource( 3 )]
+margin_left = 224.69
+margin_top = 29.272
+margin_right = 324.69
+margin_bottom = 229.272
+rect_rotation = 5.8985
+
+[node name="Panel4" parent="MarginContainer3/CenterContainer/CardFanContainer" instance=ExtResource( 3 )]
+margin_left = 273.026
+margin_top = 39.3674
+margin_right = 373.026
+margin_bottom = 239.367
+rect_rotation = 17.6955

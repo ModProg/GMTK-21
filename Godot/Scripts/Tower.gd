@@ -123,8 +123,8 @@ func _on_ShootTimer_timeout() -> void:
 		var target = current_target.get_ref()
 		if target:
 			var instance = projectile.instance()
-			instance.position = position
 			instance.element = instance.assgin_enum_value(element)
+			instance.position = position
 			instance.target_ref = current_target
 			instance.element = element
 			get_parent().add_child(instance)
