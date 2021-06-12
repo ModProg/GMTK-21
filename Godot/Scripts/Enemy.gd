@@ -32,57 +32,54 @@ func _physics_process(delta: float) -> void:
 
 func _on_Area2D_area_entered(area: Area2D) -> void:
 	if area.is_in_group("projectile"):
-		# Getting projectile reference
-		var projectile = area.get_parent()
-		$Sprite.modulate = Color.lightgray
-		var damage = 5  # Default is low
 
 		# Same element no damage
-		if projectile.element == element:
-			$Sprite.modulate = Color.white
-			damage = 0
-		else:
-			# What element is the enemy?
-			match projectile.element:
-				0:  # WATER
-					match element:
-						2:  # MEDIUM DAMAGE
-							$Sprite.modulate = Color.yellow
-							damage = 10
-						3:  # HIGH DAMAGE
-							$Sprite.modulate = Color.red
-							damage = 20
-				1:  # AIR
-					match element:
-						2:  # HIGH DAMAGE
-							$Sprite.modulate = Color.red
-							damage = 20
-						3:  # MEDIUM DAMAGE
-							$Sprite.modulate = Color.yellow
-							damage = 10
-				2:  # EARTH
-					match element:
-						0:  # HIGH DAMAGE
-							$Sprite.modulate = Color.red
-							damage = 20
-						1:  # MEDIUM DAMAGE
-							$Sprite.modulate = Color.yellow
-							damage = 10
-				3:  # FIRE
-					match element:
-						0:  # MEDIUM DAMAGE
-							$Sprite.modulate = Color.yellow
-							damage = 10
-						1:  # HIGH DAMAGE
-							$Sprite.modulate = Color.red
-							damage = 20
+		# if projectile.element == element:
+		# 	$Sprite.modulate = Color.white
+		# 	damage = 0
+		# else:
+		# 	# What element is the enemy?
+		# 	match projectile.element:
+		# 		0:  # WATER
+		# 			match element:
+		# 				2:  # MEDIUM DAMAGE
+		# 					$Sprite.modulate = Color.yellow
+		# 					damage = 10
+		# 				3:  # HIGH DAMAGE
+		# 					$Sprite.modulate = Color.red
+		# 					damage = 20
+		# 		1:  # AIR
+		# 			match element:
+		# 				2:  # HIGH DAMAGE
+		# 					$Sprite.modulate = Color.red
+		# 					damage = 20
+		# 				3:  # MEDIUM DAMAGE
+		# 					$Sprite.modulate = Color.yellow
+		# 					damage = 10
+		# 		2:  # EARTH
+		# 			match element:
+		# 				0:  # HIGH DAMAGE
+		# 					$Sprite.modulate = Color.red
+		# 					damage = 20
+		# 				1:  # MEDIUM DAMAGE
+		# 					$Sprite.modulate = Color.yellow
+		# 					damage = 10
+		# 		3:  # FIRE
+		# 			match element:
+		# 				0:  # MEDIUM DAMAGE
+		# 					$Sprite.modulate = Color.yellow
+		# 					damage = 10
+		# 				1:  # HIGH DAMAGE
+		# 					$Sprite.modulate = Color.red
+		# 					damage = 20
 
 		# Destroy the projectile
+		print(area)
 		area.get_parent().queue_free()
-
-		health -= damage
+		health -= 10
 		if health <= 0:
 			queue_free()
+		$Sprite.modulate = Color.darkgray
 		$FlashTimer.start()
 
 

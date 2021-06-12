@@ -16,7 +16,7 @@ const textures = {
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	texture = textures[element]
+	pass
 
 
 func _physics_process(delta: float) -> void:
@@ -26,3 +26,15 @@ func _physics_process(delta: float) -> void:
 		position += velocity * delta
 	else:
 		queue_free()
+
+func assgin_enum_value(param):
+	match param:
+		"Water":
+			element=Element.Water
+		"Fire":
+			element=Element.Fire
+		"Air":
+			element=Element.Air
+		"Earth":
+			element=Element.Earth
+	texture=textures[element]

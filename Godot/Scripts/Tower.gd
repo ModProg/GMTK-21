@@ -1,8 +1,9 @@
 extends Sprite
 
-enum Element { Water, Air, Earth, Fire }
 
-export (Element) var element = Element.Fire
+enum combined_element{Water_Air,Earth_Water,Earth_Fire,Earth_Air,Fire_Water,Air_Fire}
+
+export (String) var element = "Fire"
 export var building = false
 
 onready var tilemap = $"../../Map/TileMap"
@@ -10,19 +11,28 @@ onready var tilemap = $"../../Map/TileMap"
 var targets = []
 var current_target: WeakRef
 var game_controller: GameController
+var placed=false
+var over_lapping_with_towers=false
+var combined=false
 
 const textures = {
-	Element.Water: preload("res://Art/Towers/Water Tower.tres"),
-	Element.Air: preload("res://Art/Towers/Air Tower.tres"),
-	Element.Earth: preload("res://Art/Towers/Earth Tower.tres"),
-	Element.Fire: preload("res://Art/Towers/Fire Tower.tres"),
+	"Water": preload("res://Art/Towers/Water Tower.tres"),
+	"Air": preload("res://Art/Towers/Air Tower.tres"),
+	"Earth": preload("res://Art/Towers/Earth Tower.tres"),
+	"Fire": preload("res://Art/Towers/Fire Tower.tres"),
+	"Wood":1,
+	"Steam":2,
+	"Sand":3,
+	"Blue_fire":4,
+	"Lava":5,
+	"Ice":6,
 }
 const projectile = preload("res://Scenes/Projectile.tscn")
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	connect("change_texture",self,"on_chaning_texture")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -80,7 +90,8 @@ func _on_Area2D_area_entered(area: Area2D) -> void:
 func _on_Area2D_area_exited(area: Area2D) -> void:
 	if area.is_in_group("enemy"):
 		targets.erase(area.get_parent())
-
+	if area.is_in_group("Tower"):
+		print("Hello my dear")
 
 func _on_ShootTimer_timeout() -> void:
 	if current_target:
@@ -88,10 +99,9 @@ func _on_ShootTimer_timeout() -> void:
 		if target:
 			var instance = projectile.instance()
 			instance.position = position
+			instance.element=instance.assgin_enum_value(element)
 			instance.target_ref = current_target
 			instance.element = element
 			get_parent().add_child(instance)
 
 
-func set_element_name(names):
-	return get(names)
