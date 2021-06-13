@@ -48,6 +48,25 @@ func has_enemies() -> bool:
 func has_cards() -> bool:
 	return card_count != -1 || cards.size()>0
 	
+func has_add_cards() -> bool:
+	return card_count_add != -1 || cards_add.size()>0
+		
+func get_cards_add() -> Array:
+	var l_cards = cards_add.duplicate()
+	var ret = []
+	if card_count_add != -1:
+		for _i in card_count_add:
+			ret.append(Element.random_element())
+		return ret
+	while l_cards.size() > 0:
+		var elem = l_cards.keys()[randi() % l_cards.keys().size()]
+		if l_cards[elem] == 0:
+			l_cards.erase(elem)
+		else:
+			ret.append(elem)
+			l_cards[elem] -= 1
+	return ret
+	
 func get_cards() -> Array:
 	var l_cards = cards.duplicate()
 	var ret = []

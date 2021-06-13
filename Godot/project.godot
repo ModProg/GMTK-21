@@ -25,9 +25,14 @@ _global_script_classes=[ {
 "path": "res://Scripts/GameController.gd"
 }, {
 "base": "Reference",
+"class": "Maps",
+"language": "GDScript",
+"path": "res://Scripts/Utils/Maps.gd"
+}, {
+"base": "Reference",
 "class": "Music",
 "language": "GDScript",
-"path": "res://Scripts/Utils/Sound.gd"
+"path": "res://Scripts/Utils/Music.gd"
 }, {
 "base": "Particles2D",
 "class": "Particles2D_Plus",
@@ -63,6 +68,7 @@ _global_script_class_icons={
 "Element": "",
 "Enemies": "",
 "GameController": "",
+"Maps": "",
 "Music": "",
 "Particles2D_Plus": "res://GPUParticles2D_Icon.svg",
 "RPGLabel": "",
@@ -75,7 +81,7 @@ _global_script_class_icons={
 [application]
 
 config/name="GMTK-21"
-run/main_scene="res://Scenes/ScrapScene.tscn"
+run/main_scene="res://Scenes/Scenes/Infinit.tscn"
 config/icon="res://Art/icon.png"
 
 [display]

@@ -39,7 +39,7 @@ func _process(delta: float) -> void:
 func NewRound():
 	index += 1
 	if index == rounds.size():
-		get_tree().quit(0)
+		get_tree().change_scene("res://Scenes/Scenes/Infinit.tscn")
 		return
 
 	cur_round = rounds[index]
@@ -68,7 +68,8 @@ func NewRound():
 		game_controller.play_music(cur_round.music)
 	if cur_round.has_cards():
 		ui_controller.set_cards(cur_round.get_cards())
-	
+	if cur_round.has_add_cards():
+		ui_controller.add_cards(cur_round.get_cards())
 	game_controller.modifiers = {}
 	for m in cur_round.modifiers:
 		game_controller.modifiers[m]=true

@@ -45,6 +45,21 @@ func set_map(map: String):
 	round_controller.paths = map_instance.get_node("Paths").get_children()
 
 func set_scenario(scenario):
+	randomize()
+	if scenario.empty():
+		round_controller.rounds = []
+		for i in range(1,30):
+			var r = Round.new()
+			r.name = "Round "+str(i)+"/"+str(30)
+			r.round_time = 20
+			r.spawn_time = 1
+			r.card_count_add = 2
+			r.map = Maps.random_map()
+			r.enemy_count = sqrt(i)*4
+			round_controller.rounds.append(r)
+		play_music(Music.get_random_music())
+		round_controller.NewRound()
+		return
 	var file = File.new()
 	file.open(scenario, file.READ)
 	var text = file.get_as_text()
