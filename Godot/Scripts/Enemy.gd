@@ -11,6 +11,9 @@ var slowed_down = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if round_controller.game_controller.reverse:
+		speed = -speed
+		unit_offset = 1 
 	pass
 	#$Sprite.frames = textures[element]
 	
@@ -20,7 +23,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	offset += speed * delta
 	slowed_down = false
-	if unit_offset == 1:
+	if unit_offset == 1 || unit_offset == 0:
 		round_controller.Damage(damage)
 		queue_free()
 

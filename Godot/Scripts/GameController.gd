@@ -14,7 +14,7 @@ onready var tower_parrent = $Towers
 onready var ui_controller = $Node2D/UI
 onready var round_controller = $RoundController
 onready var music_player: AudioStreamPlayer = $MusicPlayer
-
+var reverse
 var modifiers = {}
 
 # Called when the node enters the scene tree for the first time.
@@ -46,8 +46,10 @@ func set_map(map: String):
 
 func set_scenario(scenario):
 	randomize()
+	reverse = false
 	if scenario.empty():
 		round_controller.rounds = []
+		reverse = true
 		for i in range(1,30):
 			var r = Round.new()
 			r.name = "Round "+str(i)+"/"+str(30)
