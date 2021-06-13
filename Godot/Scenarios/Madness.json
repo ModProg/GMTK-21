@@ -1,8 +1,9 @@
 {
-  "map": "Scrup",
-  "music": 1,
   "rounds": [
     {
+      "map": "Scrup",
+      "music": 1,
+      "card_count":10,
       "enemy_count": 1,
       "round_time": 5,
       "spawn_time": 0.1

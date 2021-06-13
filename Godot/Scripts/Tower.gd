@@ -23,7 +23,7 @@ const textures = {
 	"Lava": preload("res://Art/Towers/Lava Tower.tres"),
 	"Rain": preload("res://Art/Towers/Rain Tower.tres"),
 }
-const projectile = preload("res://Scenes/Projectile.tscn")
+const projectile = preload("res://Scenes/Projectile_Backup.tscn")
 
 const cooldowns = {
 	"Water": 1,
@@ -159,7 +159,7 @@ func _on_ShootTimer_timeout() -> void:
 			instance.position = position
 			instance.target_ref = current_target
 			instance.element = element
-			instance.game_controller = game_controller
+#			instance.game_controller = game_controller
 			get_parent().add_child(instance)
 	else:
 		$ShootTimer.stop()

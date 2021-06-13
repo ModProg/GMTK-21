@@ -9,7 +9,7 @@ var max_health: int setget set_max_health
 var _max_health: int
 var total_rounds: int setget set_total_rounds
 var _total_rounds: int
-var current_round: int setget set_current_round
+var current_round setget set_current_round
 var _current_round: int
 #var game_controller: GameController setget set_game_controller
 
@@ -60,6 +60,9 @@ func set_total_rounds(value: int):
 	roundText.text = 'Round ' + str(_current_round) + "/" + str(_total_rounds)
 
 
-func set_current_round(value: int):
-	_current_round = value
-	roundText.text = 'Round ' + str(_current_round) + "/" + str(_total_rounds)
+func set_current_round(value):
+	if value is int:
+		_current_round = value
+		roundText.text = 'Round ' + str(_current_round) + "/" + str(_total_rounds)
+	else:
+		roundText.text = value

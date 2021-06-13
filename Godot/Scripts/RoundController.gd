@@ -8,7 +8,7 @@ onready var spawnTimer = $SpawnTimer
 onready var roundTimer = $RoundTimer
 
 #const enemyScene = preload("res://Scenes/Enemy.tscn")
-const health = 100
+var health = 100
 
 var paths: Array
 var rounds: Array
@@ -24,12 +24,17 @@ var game_controller: GameController
 
 func SpawnEnemy():
 	var e = cur_round.get_enemy()
-	if e.empty():
+	if not e:
 		return spawnTimer.stop()
-	var enemy = Enemies.random_enemy().instance()
+	var enemy = e.instance()
 	enemy.round_controller = self
-	paths[rand_range(0, paths.size())].add_child(enemy)
+	paths[rand_range(0,	 paths.size())].add_child(enemy)
 
+func _process(delta: float) -> void:
+	if game_controller.modifiers.has("all_dead_continue"):
+		if 0 == get_tree().get_nodes_in_group("enemy").size() && !cur_round.has_enemies():
+			print(get_tree().get_nodes_in_group("enemy"))
+			NewRound()
 
 func NewRound():
 	index += 1
@@ -38,13 +43,24 @@ func NewRound():
 		return
 
 	cur_round = rounds[index]
+
+	if cur_round.health != 0:
+		health = cur_round.health
+		cur_health = health
 	round_start_health = cur_health
+	
+	
+	if not cur_round.map.empty():
+		game_controller.set_map(cur_round.map)
 
 	roundTimer.start(cur_round.round_time)
 	spawnTimer.start(cur_round.initial_spawn_time)
 	spawnTimer.wait_time = cur_round.spawn_time
-	ui_controller.current_round = index + 1
-	ui_controller.total_rounds = rounds.size()
+	if not cur_round.name.empty():
+		ui_controller.current_round = cur_round.name
+	else:
+		ui_controller.current_round = index + 1
+		ui_controller.total_rounds = rounds.size()
 	ui_controller.max_health = health
 	ui_controller.health = cur_health
 	ui_controller.message = cur_round.help_text
@@ -60,11 +76,12 @@ func NewRound():
 			for t in game_controller.towers.values():
 				t.queue_free()
 			game_controller.towers.clear()
+			
 
 
 func Damage(dmg):
 	cur_health -= dmg
-	if cur_health == 0:
+	if cur_health <= 0:
 		if cur_round.retry:
 			cur_round.reset()
 			cur_health = round_start_health

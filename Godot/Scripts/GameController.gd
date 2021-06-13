@@ -1,4 +1,3 @@
-tool
 extends Node
 
 class_name GameController
@@ -33,10 +32,19 @@ func play_music(music: AudioStream):
 	music_player.stream = music
 	music_player.play()
 
-
-func set_scenario(scenario):
+func set_map(map: String):
 	if map_instance:
 		map_instance.queue_free()
+	map_instance = load("res://Scenes/Maps/" + map + ".tscn").instance()
+	tile_map = map_instance.get_node("TileMap")
+	var map_size = tile_map.to_global(tile_map.map_to_world(tile_map.get_used_rect().size))
+	var vp_size = get_viewport().size
+	map_instance.position = (vp_size - map_size) / 2
+	add_child(map_instance)
+	move_child(map_instance, 0)
+	round_controller.paths = map_instance.get_node("Paths").get_children()
+
+func set_scenario(scenario):
 	var file = File.new()
 	file.open(scenario, file.READ)
 	var text = file.get_as_text()
@@ -45,27 +53,16 @@ func set_scenario(scenario):
 	var rounds = []
 	for r in result["rounds"]:
 		rounds.append(Round.new().from_dict(r))
-
-	map_instance = load("res://Scenes/Maps/" + result.map + ".tscn").instance()
-	add_child(map_instance)
-	move_child(map_instance, 0)
-
-	tile_map = map_instance.get_node("TileMap")
-	var map_size = tile_map.to_global(tile_map.map_to_world(tile_map.get_used_rect().size))
-	var vp_size = get_viewport().size
-	map_instance.position = (vp_size - map_size) / 2
-
-	if not Engine.editor_hint:
-		round_controller.rounds = rounds
-		round_controller.NewRound()
-		round_controller.paths = get_tree().get_nodes_in_group("path")
-		if result.has("music"):
-			var m: AudioStreamMP3
-			if result.music is String:
-				m = Music.get_music_by_name(result.music)
-			else:
-				m = Music.get_music_by_id(result.music)
-			music_player.stream = m
+		
+	round_controller.rounds = rounds
+	round_controller.NewRound()
+#	if result.has("music"):
+#		var m: AudioStreamMP3
+#		if result.music is String:
+#			m = Music.get_music_by_name(result.music)
+#		else:
+#			m = Music.get_music_by_id(result.music)
+#		music_player.stream = m
 
 
 func add_tower(tower: Node):

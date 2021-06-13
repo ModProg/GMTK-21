@@ -63,6 +63,7 @@ shape = SubResource( 1 )
 
 [node name="Walking" type="AnimatedSprite" parent="."]
 frames = SubResource( 8 )
+frame = 5
 playing = true
 
 [connection signal="timeout" from="FlashTimer" to="." method="_on_FlashTimer_timeout"]

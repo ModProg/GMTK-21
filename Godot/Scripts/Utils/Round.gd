@@ -10,20 +10,24 @@ var retry: bool
 var music: AudioStream
 var help_text: String
 var modifiers: Array
+var map: String
 
 var cards: Dictionary
 var cards_add: Dictionary
 var card_count: int
 var card_count_add: int
 
+var health: int
+var name: String
+
 var res_enemy_count: int
 var res_enemy_distribution: Dictionary
 var res_enemies: Array
 
 
-func get_enemy() -> String:
+func get_enemy() -> PackedScene:
 	if enemies.size() > 0:
-		return enemies.pop_front()
+		return Enemies.enemies[enemies.pop_front()]
 	elif enemy_distribution.size() > 0:
 		var keys = enemy_distribution.keys()
 		var e = keys[randi()%keys.size()]
@@ -31,12 +35,15 @@ func get_enemy() -> String:
 			enemy_distribution.erase(e)
 			return get_enemy()
 		enemy_distribution[e] -= 1
-		return e
+		return Enemies.enemies[e]
 	elif enemy_count > 0:
 		enemy_count -= 1
-		return Element.random_element()
+		return Enemies.random_enemy()
 	else:
-		return ""
+		return null
+
+func has_enemies() -> bool:
+	return !(enemies.size() == 0 && enemy_distribution.size() == 0 && enemy_count == 0)
 
 func has_cards() -> bool:
 	return card_count != -1 || cards.size()>0
@@ -89,6 +96,9 @@ func from_dict(value: Dictionary) -> Round:
 	
 	if value.has("cards"):
 		cards = value.cards
+		
+	if value.has("name"):
+		name = value.name
 	
 	if value.has("cards_add"):
 		cards_add = value.cards_add
@@ -98,6 +108,13 @@ func from_dict(value: Dictionary) -> Round:
 	else:
 		card_count = -1
 	
+	if value.has("map"):
+		map = value.map
+		
+	
+	if value.has("health"):
+		health = value.health
+		
 	if value.has("card_count_add"):
 		card_count_add = value.card_count_add
 		

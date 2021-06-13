@@ -3,6 +3,8 @@
 [ext_resource path="res://Scenes/Enemies/Enemy.tscn" type="PackedScene" id=1]
 
 [node name="Enemy" instance=ExtResource( 1 )]
+element = "Fire"
+health = 10
 
 [node name="Walking" parent="." index="2"]
-frame = 4
+frame = 2
