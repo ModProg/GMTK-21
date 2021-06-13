@@ -1,6 +1,6 @@
 class_name Music
 
-const music = [preload("res://Sound/Music/01_62s.mp3"), preload("res://Sound/Music/02_19s.mp3")]
+const music = [preload("res://Sound/Music/4.wav"), preload("res://Sound/Music/7.wav"), preload("res://Sound/Music/6.wav")]
 
 static func get_music_by_id(id: int) -> AudioStreamMP3:
 	return music[id - 1]
