@@ -19,7 +19,7 @@ _data = {
 
 [sub_resource type="Curve2D" id=4]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 672, 32, 0, 0, 0, 0, 672, 800, 0, 0, 0, 0, 160, 800, 0, 0, 0, 0, 160, 96 )
+"points": PoolVector2Array( 0, 0, 0, 0, 672, 32, 0, 0, 0, 0, 671.455, 404.43, 0, 0, 0, 0, 672, 800, 0, 0, 0, 0, 160, 800, 0, 0, 0, 0, 160, 96 )
 }
 
 [node name="Map" type="Node2D"]
