@@ -6,8 +6,8 @@ static func random_element() -> String:
 	return basic[randi() % basic.size()]
 
 const combinations = {
-	["Water", "Air"]: "Ice",
-	["Water", "Earth"]: "Wood",
+	["Water", "Air"]: "Rain",
+	["Water", "Earth"]: "Mud",
 	["Water", "Fire"]: "Steam",
 	["Air", "Earth"]: "Sand",
 	["Air", "Fire"]: "Blue_Fire",

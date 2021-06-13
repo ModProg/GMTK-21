@@ -1,50 +1,76 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://Art/Projectiles/Water Projectile.tres" type="Texture" id=1]
+[ext_resource path="res://Art/Particles/Fire Particles.tres" type="Material" id=1]
 [ext_resource path="res://Scripts/Projectile.gd" type="Script" id=2]
+[ext_resource path="res://Art/Particles/Air Particles.tres" type="Material" id=3]
+[ext_resource path="res://addons/kenney_particle_pack/twirl_02.png" type="Texture" id=4]
+[ext_resource path="res://Art/Particles/Blue_Fire Particles.tres" type="Material" id=5]
+[ext_resource path="res://addons/kenney_particle_pack/smoke_07.png" type="Texture" id=6]
+[ext_resource path="res://Particles2D+.gd" type="Script" id=7]
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 2.23607
+[sub_resource type="Curve" id=1]
+max_value = 16.0
+_data = [ Vector2( 0, 4 ), 0.0, 0.0, 0, 0, Vector2( 0.501299, 16 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="Animation" id=2]
-resource_name = "Fire"
+[sub_resource type="CircleShape2D" id=2]
+radius = 2.0
+
+[sub_resource type="Animation" id=3]
 length = 0.3
-tracks/0/type = "value"
-tracks/0/path = NodePath("Destroyarea/CollisionShape2D:disabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
 
-[sub_resource type="CircleShape2D" id=3]
-radius = 4.26683
+[sub_resource type="StreamTexture" id=4]
+flags = 4
+load_path = "res://.import/smoke_04.png-5ef826fbb55e52a15a33374d64078595.stex"
 
 [node name="Projectile" type="Sprite"]
 scale = Vector2( 8, 8 )
-texture = ExtResource( 1 )
 script = ExtResource( 2 )
+earth_size = SubResource( 1 )
 
 [node name="Area2D" type="Area2D" parent="." groups=[
 "projectile",
 ]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
+
+[node name="Fire" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PoolVector2Array( 0, 1, 6, 7, 6, -7, 0, -1 )
+disabled = true
 
 [node name="Animation_player" type="AnimationPlayer" parent="."]
-anims/Fire = SubResource( 2 )
+anims/Fire = SubResource( 3 )
 
-[node name="Destroyarea" type="Area2D" parent="." groups=[
-"Destroyable",
-]]
+[node name="BlueFire" type="Particles2D" parent="."]
+emitting = false
+amount = 100
+lifetime = 0.5
+visibility_rect = Rect2( -4, -4, 8, 8 )
+process_material = ExtResource( 5 )
+texture = SubResource( 4 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Destroyarea"]
-shape = SubResource( 3 )
+[node name="Fire" type="Particles2D" parent="."]
+emitting = false
+amount = 100
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+visibility_rect = Rect2( -4, -4, 8, 8 )
+process_material = ExtResource( 1 )
+texture = ExtResource( 6 )
+script = ExtResource( 7 )
 
-[connection signal="area_entered" from="Destroyarea" to="." method="_on_Destroyarea_area_entered"]
+[node name="Air" type="Particles2D" parent="."]
+emitting = false
+amount = 5
+lifetime = 0.3
+visibility_rect = Rect2( -4, -4, 8, 8 )
+process_material = ExtResource( 3 )
+texture = ExtResource( 4 )
+
+[node name="SelfDestruct" type="Timer" parent="."]
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]
+[connection signal="particles_cycle_finished" from="Fire" to="." method="_on_Fire_particles_cycle_finished"]
+[connection signal="timeout" from="SelfDestruct" to="." method="_on_SelfDestruct_timeout"]

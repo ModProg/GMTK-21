@@ -1,6 +1,6 @@
 extends Sprite
 
-export (String) var element = "Fire"
+var element:String = "Fire"
 export var building = false
 
 var tile_map
@@ -10,24 +10,49 @@ var current_target: WeakRef
 var game_controller
 var ex_tower: Node2D
 
+
 const textures = {
 	"Water": preload("res://Art/Towers/Water Tower.tres"),
 	"Air": preload("res://Art/Towers/Air Tower.tres"),
 	"Earth": preload("res://Art/Towers/Earth Tower.tres"),
 	"Fire": preload("res://Art/Towers/Fire Tower.tres"),
-	"Wood": preload("res://Art/Towers/Wood Tower.tres"),
+	"Mud": preload("res://Art/Towers/Mud Tower.tres"),
 	"Steam": preload("res://Art/Towers/Steam Tower.tres"),
 	"Sand": preload("res://Art/Towers/Sand Tower.tres"),
 	"Blue_Fire": preload("res://Art/Towers/Blue_Fire Tower.tres"),
 	"Lava": preload("res://Art/Towers/Lava Tower.tres"),
-	"Ice": preload("res://Art/Towers/Ice Tower.tres"),
+	"Rain": preload("res://Art/Towers/Rain Tower.tres"),
 }
 const projectile = preload("res://Scenes/Projectile.tscn")
 
+const cooldowns = {
+	"Water": 1,
+	"Air": 1,
+	"Earth": .3,
+	"Fire": .5,
+	"Mud": 2,
+	"Steam": 1,
+	"Sand": 3,
+	"Blue_Fire": 2,
+	"Lava": .1,
+	"Rain": 2,
+}
 
+const ranges = {
+	"Water": 20,
+	"Air": 30,
+	"Earth": 25,
+	"Fire": 6,
+	"Mud": 2,
+	"Steam": 1,
+	"Sand": 3,
+	"Blue_Fire": 2,
+	"Lava": .1,
+	"Rain": 2,
+}
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	$"Area2D/CollisionShape2D".shape.radius = ranges[element]
 
 
 func try_place() -> bool:
@@ -43,6 +68,7 @@ func try_place() -> bool:
 			if ! combined.empty() && ! game_controller.modifiers.has("no_combine"):
 				l_ex_tower.element = combined
 				l_ex_tower.texture = textures[combined]
+				l_ex_tower.get_node("Area2D/CollisionShape2D").shape.radius = ranges[combined]
 				queue_free()
 				return true
 			else:
@@ -92,9 +118,10 @@ func _physics_process(delta: float) -> void:
 				if dist > cdist:
 					dist = cdist
 					current_target = weakref(target)
-			if current_target:
-				$ShootTimer.start()
 		if current_target:
+			if $ShootTimer.is_stopped():
+				_on_ShootTimer_timeout()
+				$ShootTimer.start(cooldowns[element])
 			var target = current_target.get_ref()
 			if ! target:
 				current_target = null
@@ -109,7 +136,7 @@ func _physics_process(delta: float) -> void:
 
 # This needs to also run while building 
 func _on_Area2D_area_entered(area: Area2D) -> void:
-	if area.is_in_group("enemy"):
+	if area.is_in_group("enemy") && area.get_parent().element != element:
 		targets.append(area.get_parent())
 
 
@@ -127,4 +154,7 @@ func _on_ShootTimer_timeout() -> void:
 			instance.position = position
 			instance.target_ref = current_target
 			instance.element = element
+			instance.game_controller = game_controller
 			get_parent().add_child(instance)
+	else:
+		$ShootTimer.stop()
