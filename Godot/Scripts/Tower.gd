@@ -43,12 +43,12 @@ const ranges = {
 	"Air": 30,
 	"Earth": 25,
 	"Fire": 6,
-	"Mud": 2,
-	"Steam": 1,
-	"Sand": 3,
-	"Blue_Fire": 2,
-	"Lava": .1,
-	"Rain": 2,
+	"Mud": 20,
+	"Steam": 10,
+	"Sand": 10,
+	"Blue_Fire": 10,
+	"Lava": 10,
+	"Rain": 10,
 }
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -67,6 +67,7 @@ func try_place() -> bool:
 			var combined = Element.combine(l_ex_tower.element, element)
 			if ! combined.empty() && ! game_controller.modifiers.has("no_combine"):
 				l_ex_tower.element = combined
+				l_ex_tower.get_node("ShootTimer").wait_time = cooldowns[element]
 				l_ex_tower.texture = textures[combined]
 				l_ex_tower.get_node("Area2D/CollisionShape2D").shape.radius = ranges[combined]
 				queue_free()

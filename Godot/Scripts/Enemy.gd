@@ -6,7 +6,7 @@ export var speed = 100
 export var health = 25
 
 var round_controller
-
+var slowed_down = false
 const textures = {
 	"Water": preload("res://Art/Enemies/Water Enemy.tres"),
 	"Air": preload("res://Art/Enemies/Air Enemy.tres"),
@@ -23,11 +23,14 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	offset += speed * delta
+	slowed_down = false
 	if unit_offset == 1:
 		round_controller.Damage(damage)
 		queue_free()
 
 func damage(p_element: String, d: float) -> void:
+	if d == 0:
+		return
 	# Same element no damage
 	var damage
 	if p_element == element:
@@ -81,7 +84,10 @@ func damage(p_element: String, d: float) -> void:
 						damage = 2
 	health -= damage*d
 	if health <= 0:
+		print("Enemy("+element+") died to "+p_element)
 		queue_free()
+	else:
+		print("Enemy("+element+") damaged("+str(damage*d)+") by "+p_element)
 	$FlashTimer.start()
 
 

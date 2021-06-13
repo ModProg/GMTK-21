@@ -1,7 +1,7 @@
 [gd_resource type="ParticlesMaterial" load_steps=3 format=2]
 
 [sub_resource type="Gradient" id=1]
-colors = PoolColorArray( 1, 0, 0, 1, 0.207031, 0.0533752, 0.0533752, 1 )
+colors = PoolColorArray( 1, 0.480469, 0, 1, 0.207031, 0.0533752, 0.0533752, 1 )
 
 [sub_resource type="GradientTexture" id=2]
 gradient = SubResource( 1 )
@@ -22,3 +22,5 @@ angle = 961.3
 angle_random = 1.0
 scale = 0.01
 color_ramp = SubResource( 2 )
+hue_variation = -1.0
+hue_variation_random = 0.08

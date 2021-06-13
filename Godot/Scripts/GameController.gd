@@ -12,7 +12,7 @@ var map_instance: Node2D
 var tile_map: TileMap
 var towers: Dictionary = {}
 onready var tower_parrent = $Towers
-onready var ui_controller = $UI
+onready var ui_controller = $Node2D/UI
 onready var round_controller = $RoundController
 onready var music_player: AudioStreamPlayer = $MusicPlayer
 
