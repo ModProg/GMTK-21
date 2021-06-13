@@ -81,7 +81,7 @@ _global_script_class_icons={
 [application]
 
 config/name="GMTK-21"
-run/main_scene="res://Scenes/Scenes/Tutorial.tscn"
+run/main_scene="res://Scenes/ScrapScene.tscn"
 config/icon="res://Art/icon.png"
 
 [display]
@@ -95,7 +95,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/rpg_text_boxes/plugin.cfg" )
+enabled=PoolStringArray(  )
 
 [input]
 
