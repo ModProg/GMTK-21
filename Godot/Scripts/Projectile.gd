@@ -17,14 +17,14 @@ export var mud_size: Curve
 const speeds = {
 	"Water": 200,
 	"Air": 200,
-	"Earth": 300,
+	"Earth": 400,
 	"Fire": 400,
 	"Mud": 200,
 	"Steam": 400,
-	"Sand": 150,
+	"Tornado": 200,
 	"Blue_Fire": 1,
 	"Lava": 200,
-	"Rain": 100,
+	"Rain": 200,
 }
 
 const max_life = {
@@ -34,7 +34,7 @@ const max_life = {
 	"Fire": 3,
 	"Mud": 3,
 	"Steam": 3,
-	"Sand": 3,
+	"Tornado": 3,
 	"Blue_Fire": 3,
 	"Lava": 3,
 	"Rain": 3,
@@ -43,6 +43,8 @@ var max_dist
 var start_pos
 var wait = true;
 var hit = false;
+var wos = false;
+var wos2 = false;
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$SelfDestructStart.start(max_life[element])
@@ -52,8 +54,6 @@ func _ready() -> void:
 	distance=self.position.distance_to(final_pos)
 	max_dist=self.position.distance_to(final_pos)
 	start_pos = self.position
-	if element != "Fire":
-		$Fire.queue_free()
 	texture = null
 	match element:
 		"Water":
@@ -61,42 +61,66 @@ func _ready() -> void:
 		"Lava":
 			texture = preload("res://Art/Projectiles/Fire Projectile.tres")
 		"Air":
-			wait = true
-			$SelfDestruct.wait_time = .5
+			wait = false
 			$Area2D/CollisionShape2D.shape.radius = 5
 			$Air.emitting = true
-		"Sand":
+			$SFX/Air.play()
+		"Tornado":
 			wait = true
 			$SelfDestruct.wait_time = .5
 			$Area2D/CollisionShape2D.shape.radius = 5
-			$Sand.emitting = true
+			$Tornado.emitting = true
+			$SFX/Tornado.play()
 		"Earth":
-			wait = false
-			$SelfDestruct.wait_time = 0.5
+			wos=true
 			texture = preload("res://Art/Projectiles/Earth Projectile.tres")
 		"Mud":
 			wait = false
 			texture = preload("res://Art/Projectiles/Earth Projectile.tres")
 		"Fire":
+			wos2 = true
 			position = (final_pos-start_pos)/2 + start_pos
 			rotation = (final_pos-start_pos).angle()
 			$Area2D/Fire.disabled = false
 			$Fire.emitting = true
+			$SFX/Fire.play(0.25)
 		"Steam":
+			wait = true
+			$SelfDestruct.wait_time = .5
 			position = (final_pos-start_pos)/2 + start_pos
 			rotation = (final_pos-start_pos).angle()
 			$Area2D/Steam.disabled = false
 			$Steam.emitting = true
+			$SFX/Steam.play()
 		"Blue_Fire":
+			wos = true
 			position = (final_pos-start_pos)/2 + start_pos
 			rotation = (final_pos-start_pos).angle()
 			$Area2D/Blue_Fire.disabled = false
 			$Blue_Fire.emitting = true
+			$SFX/Flamethrower.play()
 		"Rain":
 			$SelfDestruct.wait_time = 4
 			texture = preload("res://Art/Projectiles/Rain Projectile.tres")
 			$Rain.emitting = true
+			$SFX/Rain.play()
 			offset = Vector2(0,-8)
+
+func _process(delta: float) -> void:
+	var tl = min($SelfDestructStart.time_left,$SelfDestruct.time_left)
+	if  tl  < .4:
+		match element:
+			"Tornado":
+				$SFX/Tornado.volume_db -= 25 * delta
+			"Air":
+				$SFX/Air.volume_db -= 25 * delta
+			"Rain":
+				$SFX/Rain.volume_db -= 25 * delta
+			"Steam":
+				$SFX/Steam.volume_db -= 25 * delta
+			"Blue_Fire":
+				$SFX/Flamethrower.volume_db -= 25 * delta
+				$Blue_Fire.lifetime -= .5 *delta
 
 func _physics_process(delta: float) -> void:
 	var target = target_ref.get_ref()
@@ -109,7 +133,14 @@ func _physics_process(delta: float) -> void:
 			position = final_pos
 			hit = true
 			set_physics_process(false)
-			if wait:
+			if wos:
+				match element:
+					"Earth":
+						$SFX/Earth.play()
+						for e in enemies:
+							if weakref(e).get_ref():
+								e.damage(element, 10)
+			elif wait:
 				$SelfDestruct.start()
 			else:
 				_on_SelfDestruct_timeout()
@@ -121,6 +152,10 @@ func _physics_process(delta: float) -> void:
 
 func physic_according_to_element(element,target,delta):
 	match element:
+		"Blue_Fire":
+			for e in enemies:
+				if weakref(e).get_ref():
+					e.damage("Fire", 10*delta)
 		"Water":
 			#I think of making to spawn a area 2d when it reaches the tileset
 			#and set the tile set to watered tile set in that water tileset we can have 
@@ -132,7 +167,7 @@ func physic_according_to_element(element,target,delta):
 					e.damage(element, 10*delta)
 			#change a target type to time based
 			pass
-		"Sand":
+		"Tornado":
 			for e in enemies:
 				if weakref(e).get_ref():
 					e.damage("Air", 10*delta)
@@ -190,11 +225,7 @@ func _on_SelfDestruct_timeout() -> void:
 			inst.scale = Vector2.ONE*mud_size.interpolate(1)
 			inst.slow_down = .5
 			game_controller.tower_parrent.add_child(inst)
-		"Earth":
-			for e in enemies:
-				if weakref(e).get_ref():
-					e.damage(element, 10)
-	if !(element == "Fire" || element == "Steam" || element == "Blue_Fire") :
+	if !(element == "Fire" || element == "Steam") :
 		queue_free()
 
 
@@ -203,7 +234,7 @@ func _on_Fire_particles_cycle_finished() -> void:
 		for e in enemies:
 			if weakref(e).get_ref():
 				e.damage(element, 10)
-		queue_free()
+		scale = Vector2.ZERO
 
 
 func _on_Steam_particles_cycle_finished() -> void:
@@ -213,9 +244,6 @@ func _on_Steam_particles_cycle_finished() -> void:
 				e.damage("Fire", 10)
 		queue_free()
 
-func _on_BlueFire_particles_cycle_finished() -> void:
-	if element == "Blue_Fire":
-		for e in enemies:
-			if weakref(e).get_ref():
-				e.damage("Fire", 10)
+func _sound_done() -> void:
+	if wos || wos2:
 		queue_free()

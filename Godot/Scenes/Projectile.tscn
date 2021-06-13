@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Art/Particles/Fire Particles.tres" type="Material" id=1]
 [ext_resource path="res://Scripts/Projectile.gd" type="Script" id=2]
@@ -9,26 +9,34 @@
 [ext_resource path="res://Particles2D+.gd" type="Script" id=7]
 [ext_resource path="res://Art/Projectiles/Rain Projectile.tres" type="Texture" id=8]
 [ext_resource path="res://addons/kenney_particle_pack/smoke_10.png" type="Texture" id=9]
+[ext_resource path="res://Sound/SFX/Projectiles/Tornado.ogg" type="AudioStream" id=10]
+[ext_resource path="res://Sound/SFX/Projectiles/Earth.ogg" type="AudioStream" id=11]
+[ext_resource path="res://Sound/SFX/Projectiles/Air.ogg" type="AudioStream" id=12]
+[ext_resource path="res://Sound/SFX/Projectiles/Fire.ogg" type="AudioStream" id=13]
+[ext_resource path="res://Sound/SFX/Projectiles/Steam.ogg" type="AudioStream" id=14]
+[ext_resource path="res://Sound/SFX/Projectiles/Flamethrower.ogg" type="AudioStream" id=15]
+[ext_resource path="res://Sound/SFX/Projectiles/Rain.ogg" type="AudioStream" id=16]
+[ext_resource path="res://Sound/SFX/Projectiles/Mud.ogg" type="AudioStream" id=17]
 
 [sub_resource type="Curve" id=1]
 max_value = 16.0
 _data = [ Vector2( 0, 4 ), 0.0, 0.0, 0, 0, Vector2( 0.503896, 16 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="Curve" id=6]
+[sub_resource type="Curve" id=2]
 max_value = 16.0
 _data = [ Vector2( 0, 4 ), 0.0, 0.0, 0, 0, Vector2( 0.503896, 16 ), 0.0, 0.0, 0, 0, Vector2( 0.953247, 5.81818 ), 0.0, 0.0, 0, 0, Vector2( 1, 12.2182 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=3]
 radius = 4.0
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 length = 0.3
 
-[sub_resource type="StreamTexture" id=4]
+[sub_resource type="StreamTexture" id=5]
 flags = 4
 load_path = "res://.import/smoke_04.png-5ef826fbb55e52a15a33374d64078595.stex"
 
-[sub_resource type="ParticlesMaterial" id=5]
+[sub_resource type="ParticlesMaterial" id=6]
 emission_shape = 2
 emission_box_extents = Vector3( 3.5, 1, 1 )
 flag_disable_z = true
@@ -86,12 +94,12 @@ z_as_relative = false
 texture = ExtResource( 8 )
 script = ExtResource( 2 )
 earth_size = SubResource( 1 )
-mud_size = SubResource( 6 )
+mud_size = SubResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Fire" type="CollisionPolygon2D" parent="Area2D"]
 polygon = PoolVector2Array( 0, 1, 6, 7, 6, -7, 0, -1 )
@@ -106,7 +114,7 @@ polygon = PoolVector2Array( 0, 1, 16, 3, 16, -4, 0, -1 )
 disabled = true
 
 [node name="Animation_player" type="AnimationPlayer" parent="."]
-anims/Fire = SubResource( 3 )
+anims/Fire = SubResource( 4 )
 
 [node name="Blue_Fire" type="Particles2D" parent="."]
 emitting = false
@@ -114,8 +122,7 @@ amount = 100
 lifetime = 0.5
 visibility_rect = Rect2( -4, -4, 8, 8 )
 process_material = ExtResource( 5 )
-texture = SubResource( 4 )
-script = ExtResource( 7 )
+texture = SubResource( 5 )
 
 [node name="Rain" type="Particles2D" parent="."]
 position = Vector2( 0, -7 )
@@ -124,7 +131,7 @@ emitting = false
 amount = 100
 lifetime = 0.4
 visibility_rect = Rect2( -4, -4, 8, 8 )
-process_material = SubResource( 5 )
+process_material = SubResource( 6 )
 
 [node name="Fire" type="Particles2D" parent="."]
 emitting = false
@@ -156,7 +163,7 @@ visibility_rect = Rect2( -4, -4, 8, 8 )
 process_material = ExtResource( 3 )
 texture = ExtResource( 4 )
 
-[node name="Sand" type="Particles2D" parent="."]
+[node name="Tornado" type="Particles2D" parent="."]
 emitting = false
 amount = 5
 lifetime = 0.3
@@ -168,10 +175,36 @@ texture = ExtResource( 9 )
 
 [node name="SelfDestructStart" type="Timer" parent="."]
 
+[node name="SFX" type="Node2D" parent="."]
+
+[node name="Air" type="AudioStreamPlayer2D" parent="SFX"]
+stream = ExtResource( 12 )
+
+[node name="Earth" type="AudioStreamPlayer2D" parent="SFX"]
+stream = ExtResource( 11 )
+
+[node name="Fire" type="AudioStreamPlayer2D" parent="SFX"]
+stream = ExtResource( 13 )
+
+[node name="Flamethrower" type="AudioStreamPlayer2D" parent="SFX"]
+stream = ExtResource( 15 )
+
+[node name="Mud" type="AudioStreamPlayer2D" parent="SFX"]
+stream = ExtResource( 17 )
+
+[node name="Rain" type="AudioStreamPlayer2D" parent="SFX"]
+stream = ExtResource( 16 )
+
+[node name="Steam" type="AudioStreamPlayer2D" parent="SFX"]
+stream = ExtResource( 14 )
+
+[node name="Tornado" type="AudioStreamPlayer2D" parent="SFX"]
+stream = ExtResource( 10 )
+
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]
-[connection signal="particles_cycle_finished" from="Blue_Fire" to="." method="_on_BlueFire_particles_cycle_finished"]
 [connection signal="particles_cycle_finished" from="Fire" to="." method="_on_Fire_particles_cycle_finished"]
 [connection signal="particles_cycle_finished" from="Steam" to="." method="_on_Steam_particles_cycle_finished"]
 [connection signal="timeout" from="SelfDestruct" to="." method="_on_SelfDestruct_timeout"]
 [connection signal="timeout" from="SelfDestructStart" to="." method="_on_SelfDestruct_timeout"]
+[connection signal="finished" from="SFX/Earth" to="." method="_sound_done"]

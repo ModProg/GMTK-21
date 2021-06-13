@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Deploy.ogg-028dcfa59e6783876271942bc3b8ae92.oggstr"
+
+[deps]
+
+source_file="res://Sound/SFX/Turrets/Deploy.ogg"
+dest_files=[ "res://.import/Deploy.ogg-028dcfa59e6783876271942bc3b8ae92.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -49,7 +49,7 @@ func damage(p_element: String, d: float) -> void:
 					"Fire":  # HIGH DAMAGE
 						$Sprite.modulate = Color.red
 						damage = 2
-			"Air", "Sand":  # AIR
+			"Air", "Tornado":  # AIR
 				match element:
 					"Water":  # LOW DAMAGE
 						$Sprite.modulate = Color.lightgray
@@ -86,8 +86,8 @@ func damage(p_element: String, d: float) -> void:
 	if health <= 0:
 		print("Enemy("+element+") died to "+p_element)
 		queue_free()
-	else:
-		print("Enemy("+element+") damaged("+str(damage*d)+") by "+p_element)
+#	else:
+#		print("Enemy("+element+") damaged("+str(damage*d)+") by "+p_element)
 	$FlashTimer.start()
 
 

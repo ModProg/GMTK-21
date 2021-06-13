@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Tornado.ogg-d94b2d0eb5ec47089f2bab07ebeefbad.oggstr"
+
+[deps]
+
+source_file="res://Sound/SFX/Projectiles/Tornado.ogg"
+dest_files=[ "res://.import/Tornado.ogg-d94b2d0eb5ec47089f2bab07ebeefbad.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

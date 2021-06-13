@@ -9,7 +9,7 @@ const combinations = {
 	["Water", "Air"]: "Rain",
 	["Water", "Earth"]: "Mud",
 	["Water", "Fire"]: "Steam",
-	["Air", "Earth"]: "Sand",
+	["Air", "Earth"]: "Tornado",
 	["Air", "Fire"]: "Blue_Fire",
 	["Earth", "Fire"]: "Lava"
 }

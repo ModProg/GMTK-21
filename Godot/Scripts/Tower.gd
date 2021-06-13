@@ -18,7 +18,7 @@ const textures = {
 	"Fire": preload("res://Art/Towers/Fire Tower.tres"),
 	"Mud": preload("res://Art/Towers/Mud Tower.tres"),
 	"Steam": preload("res://Art/Towers/Steam Tower.tres"),
-	"Sand": preload("res://Art/Towers/Sand Tower.tres"),
+	"Tornado": preload("res://Art/Towers/Tornado Tower.tres"),
 	"Blue_Fire": preload("res://Art/Towers/Blue_Fire Tower.tres"),
 	"Lava": preload("res://Art/Towers/Lava Tower.tres"),
 	"Rain": preload("res://Art/Towers/Rain Tower.tres"),
@@ -28,11 +28,11 @@ const projectile = preload("res://Scenes/Projectile.tscn")
 const cooldowns = {
 	"Water": 1,
 	"Air": 1,
-	"Earth": .3,
+	"Earth": .8,
 	"Fire": .5,
 	"Mud": 2,
 	"Steam": 1,
-	"Sand": 3,
+	"Tornado": 3,
 	"Blue_Fire": 2,
 	"Lava": .1,
 	"Rain": 2,
@@ -40,12 +40,12 @@ const cooldowns = {
 
 const ranges = {
 	"Water": 20,
-	"Air": 30,
-	"Earth": 25,
+	"Air": 20,
+	"Earth": 20,
 	"Fire": 6,
 	"Mud": 20,
 	"Steam": 10,
-	"Sand": 10,
+	"Tornado": 10,
 	"Blue_Fire": 10,
 	"Lava": 10,
 	"Rain": 10,
@@ -68,6 +68,8 @@ func try_place() -> bool:
 			if ! combined.empty() && ! game_controller.modifiers.has("no_combine"):
 				l_ex_tower.element = combined
 				l_ex_tower.get_node("ShootTimer").wait_time = cooldowns[element]
+				l_ex_tower.get_node("Deploy").play()
+				
 				l_ex_tower.texture = textures[combined]
 				l_ex_tower.get_node("Area2D/CollisionShape2D").shape.radius = ranges[combined]
 				queue_free()
@@ -80,6 +82,8 @@ func try_place() -> bool:
 			global_position = tile_map.to_global(
 				tile_map.map_to_world(tile_pos) + tile_map.cell_size / 2
 			)
+			get_node("ShootTimer").wait_time = cooldowns[element]
+			$Deploy.play()
 			building = false
 			return true
 	queue_free()
@@ -112,7 +116,7 @@ func _physics_process(delta: float) -> void:
 			position = get_global_mouse_position()
 			modulate = Color.black
 	else:
-		if ! current_target:
+		if ! current_target && $ShootTimer.is_stopped():
 			var dist = INF
 			for target in targets:
 				var cdist = (position - target.get_global_transform().origin).length()

@@ -11,6 +11,8 @@ var slow_down = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if not damage_type:
+		damage_type = element
 	match element:
 		"Water": 
 			texture = preload("res://Art/Projectiles/Water Placed.tres")
