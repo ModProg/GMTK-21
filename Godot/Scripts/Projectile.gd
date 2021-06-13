@@ -1,23 +1,22 @@
 extends Sprite
 
-enum Element { Water, Air, Earth, Fire }
-export (Element) var element = Element.Water
+export var element = "Water"
 export var speed = 200
 
 var target_ref: WeakRef = null
 
 
 #kinematics
-var velocity=0.0
+var velocity=Vector2.ZERO
 var target_positon=Vector2()
 var distance
 var final_pos
 
 const textures = {
-	Element.Water: preload("res://Art/Projectiles/Water Projectile.tres"),
-	Element.Air: preload("res://Art/Projectiles/Air Projectile.tres"),
-	Element.Earth: preload("res://Art/Projectiles/Earth Projectile.tres"),
-	Element.Fire: preload("res://Art/Projectiles/Fire Projectile.tres"),
+	"Water": preload("res://Art/Projectiles/Water Projectile.tres"),
+	"Air": preload("res://Art/Projectiles/Air Projectile.tres"),
+	"Earth": preload("res://Art/Projectiles/Earth Projectile.tres"),
+	"Fire": preload("res://Art/Projectiles/Fire Projectile.tres"),
 }
 
 
@@ -35,18 +34,6 @@ func _physics_process(delta: float) -> void:
 		physic_according_to_element(element,target)
 	else:
 		queue_free()
-
-func assgin_enum_value(param):
-	match param:
-		"Water":
-			element = Element.Water
-		"Fire":
-			element = Element.Fire
-		"Air":
-			element = Element.Air
-		"Earth":
-			element = Element.Earth
-	texture = textures[element]
 
 func physic_according_to_element(element,target):
 	final_pos=(target).get_global_transform().origin
@@ -68,7 +55,7 @@ func physic_according_to_element(element,target):
 		"Earth":
 			#calput stuff so that we can make user to fake 3d like in art making the 
 			#rock to rise and then we can put that animation here
-			var time=2 #distance/velocity
+			var time=distance/velocity.length()
 			#play assending animation
 			yield(get_tree().create_timer(time/2),"timeout")
 			#play decending animation

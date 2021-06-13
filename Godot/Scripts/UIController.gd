@@ -15,28 +15,36 @@ var _current_round: int
 
 onready var roundText: RichTextLabel = $"MarginContainer/Round Text"
 onready var healthText: RichTextLabel = $"MarginContainer/Health Text"
-onready var messageText: RichTextLabel = $MarginContainer3/PanelContainer/RichTextLabel
-onready var towerTables = $MarginContainer2/TowerTables
+onready var messageText = $MarginContainer3/RPGLabel
+onready var cardContainer: HBoxContainer = $MarginContainer2/Row
 var game_controller
 
+var card_scene = preload("res://Scenes/UI/ElementCard.tscn")
 
 func start() -> void:
-	for ec in get_tree().get_nodes_in_group("element_card"):
-		ec.game_controller = game_controller
+	pass
 	#towerTables.game_controller = game_controller
 
 
 func set_message(value: String):
 	Text.iconize(messageText,value)
+	messageText.print_on = true
+	messageText.print_speed = 30
+	messageText.visible_characters = 0
+	messageText.percent_visible = 0
 
+func set_cards(value: Array):
+	for c in cardContainer.get_children():
+		c.queue_free()
+	add_cards(value)
 
-#func set_game_controller(value: GameController):
-#	towerTables.game_controller = value
-
-#func set_rounds_remaining(value: int):
-#	roundText.text = 'Rounds remaining: ' + str(value)
-
-
+func add_cards(value: Array):
+	for card in value:
+		if cardContainer.get_child_count() < 8:
+			var inst = card_scene.instance()
+			inst.get_child(0).game_controller = game_controller
+			inst.get_child(0).element = card
+			cardContainer.add_child(inst)
 
 func set_health(value: int):
 	_health = value

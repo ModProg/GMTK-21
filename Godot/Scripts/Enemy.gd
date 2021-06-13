@@ -1,8 +1,6 @@
 extends PathFollow2D
 
-enum Element { Water, Air, Earth, Fire }
-
-export (Element) var element = Element.Water
+export var element = "Water"
 export var damage = 10
 export var speed = 100
 export var health = 25
@@ -10,10 +8,10 @@ export var health = 25
 var round_controller
 
 const textures = {
-	Element.Water: preload("res://Art/Enemies/Water Enemy.tres"),
-	Element.Air: preload("res://Art/Enemies/Air Enemy.tres"),
-	Element.Earth: preload("res://Art/Enemies/Earth Enemy.tres"),
-	Element.Fire: preload("res://Art/Enemies/Fire Enemy.tres"),
+	"Water": preload("res://Art/Enemies/Water Enemy.tres"),
+	"Air": preload("res://Art/Enemies/Air Enemy.tres"),
+	"Earth": preload("res://Art/Enemies/Earth Enemy.tres"),
+	"Fire": preload("res://Art/Enemies/Fire Enemy.tres"),
 }
 
 

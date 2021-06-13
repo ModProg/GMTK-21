@@ -1,7 +1,5 @@
 extends Node
 
-enum Element { Water, Air, Earth, Fire }
-
 # Round settings
 #onready var roundText = $"../../UIContainer/Round Text"
 #onready var healthText = $"../../UIContainer/Health Text"
@@ -26,7 +24,7 @@ var game_controller: GameController
 
 func SpawnEnemy():
 	var e = cur_round.get_enemy()
-	if e == -1:
+	if e.empty():
 		return spawnTimer.stop()
 	var enemy = enemyScene.instance()
 	enemy.element = e
@@ -37,7 +35,7 @@ func SpawnEnemy():
 func NewRound():
 	index += 1
 	if index == rounds.size():
-		end = true
+		get_tree().quit(0)
 		return
 
 	cur_round = rounds[index]
@@ -51,7 +49,18 @@ func NewRound():
 	ui_controller.max_health = health
 	ui_controller.health = cur_health
 	ui_controller.message = cur_round.help_text
-	game_controller.play_music(cur_round.music)
+	if cur_round.music:
+		game_controller.play_music(cur_round.music)
+	if cur_round.has_cards():
+		ui_controller.set_cards(cur_round.get_cards())
+	
+	game_controller.modifiers = {}
+	for m in cur_round.modifiers:
+		game_controller.modifiers[m]=true
+		if m == "clear":
+			for t in game_controller.towers.values():
+				t.queue_free()
+			game_controller.towers.clear()
 
 
 func Damage(dmg):

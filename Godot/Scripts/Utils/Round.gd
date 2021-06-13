@@ -1,9 +1,5 @@
 class_name Round
 
-enum Element { Water, Air, Earth, Fire }
-
-enum JSONElement { water, air, earth, fire }
-
 var enemy_count: int
 var enemy_distribution: Dictionary
 var enemies: Array
@@ -13,18 +9,24 @@ var initial_spawn_time: float
 var retry: bool
 var music: AudioStream
 var help_text: String
+var modifiers: Array
+
+var cards: Dictionary
+var cards_add: Dictionary
+var card_count: int
+var card_count_add: int
 
 var res_enemy_count: int
 var res_enemy_distribution: Dictionary
 var res_enemies: Array
 
 
-func get_enemy() -> int:
+func get_enemy() -> String:
 	if enemies.size() > 0:
 		return enemies.pop_front()
 	elif enemy_distribution.size() > 0:
 		var keys = enemy_distribution.keys()
-		var e = keys[rand_range(0, keys.size())]
+		var e = keys[randi()%keys.size()]
 		if enemy_distribution[e] == 0:
 			enemy_distribution.erase(e)
 			return get_enemy()
@@ -32,20 +34,35 @@ func get_enemy() -> int:
 		return e
 	elif enemy_count > 0:
 		enemy_count -= 1
-		return Element.values()[rand_range(0, Element.keys().size())]
+		return Element.random_element()
 	else:
-		return -1
+		return ""
 
+func has_cards() -> bool:
+	return card_count != -1 || cards.size()>0
+	
+func get_cards() -> Array:
+	var l_cards = cards.duplicate()
+	var ret = []
+	if card_count != -1:
+		for _i in card_count:
+			ret.append(Element.random_element())
+		return ret
+	while l_cards.size() > 0:
+		var elem = l_cards.keys()[randi() % l_cards.keys().size()]
+		if l_cards[elem] == 0:
+			l_cards.erase(elem)
+		else:
+			ret.append(elem)
+			l_cards[elem] -= 1
+	return ret
 
 func from_dict(value: Dictionary) -> Round:
 	if value.has("enemy_distribution"):
-		for e in JSONElement.keys():
-			if value.enemy_distribution.has(e):
-				res_enemy_distribution[JSONElement[e]] = value.enemy_distribution[e]
+		res_enemy_distribution = value.enemy_distribution
 
 	if value.has("enemies"):
-		for e in value.enemies:
-			res_enemies.append(JSONElement[e])
+			res_enemies = value.enemies
 
 	if value.has("enemy_count"):
 		res_enemy_count = value.enemy_count
@@ -66,6 +83,25 @@ func from_dict(value: Dictionary) -> Round:
 	
 	if value.has("help_text"):
 		help_text = value.help_text
+	
+	if value.has("modifiers"):
+		modifiers = value.modifiers
+	
+	if value.has("cards"):
+		cards = value.cards
+	
+	if value.has("cards_add"):
+		cards_add = value.cards_add
+	
+	if value.has("card_count"):
+		card_count = value.card_count
+	else:
+		card_count = -1
+	
+	if value.has("card_count_add"):
+		card_count_add = value.card_count_add
+		
+		
 	
 	spawn_time = value.spawn_time
 	round_time = value.round_time

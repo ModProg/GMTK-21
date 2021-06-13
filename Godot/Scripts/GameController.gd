@@ -12,10 +12,11 @@ var map_instance: Node2D
 var tile_map: TileMap
 var towers: Dictionary = {}
 onready var tower_parrent = $Towers
-onready var ui_controller: UIController = $UI
+onready var ui_controller = $UI
 onready var round_controller = $RoundController
 onready var music_player: AudioStreamPlayer = $MusicPlayer
 
+var modifiers = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -81,7 +82,6 @@ func get_tower(pos: Vector2) -> Node:
 	if towers.has(pos):
 		return towers[pos]
 	return null
-
 
 func _process(delta: float) -> void:
 	if Engine.editor_hint:

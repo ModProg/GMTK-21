@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon.svg-e8d493e8b703572e1e5192746d801d23.stex"
+path="res://.import/rtb_icon.png-d8707be0a7d307e16f90a097b2abfe8a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/card_fan_container/icon.svg"
-dest_files=[ "res://.import/icon.svg-e8d493e8b703572e1e5192746d801d23.stex" ]
+source_file="res://addons/rpg_text_boxes/rtb_icon.png"
+dest_files=[ "res://.import/rtb_icon.png-d8707be0a7d307e16f90a097b2abfe8a.stex" ]
 
 [params]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Scenes/UI/ElementCard.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/rpg_text_boxes/rpg_label.gd" type="Script" id=1]
 [ext_resource path="res://Art/Fonts/LinBiolinum_aRL.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Scripts/UIController.gd" type="Script" id=4]
 
@@ -43,14 +43,14 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -736.0
+margin_left = -1160.0
 margin_top = -240.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Row" type="HBoxContainer" parent="MarginContainer2"]
-margin_right = 736.0
+margin_right = 1160.0
 margin_bottom = 240.0
 size_flags_vertical = 3
 custom_constants/separation = 0
@@ -58,26 +58,6 @@ alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="ElementCard" parent="MarginContainer2/Row" instance=ExtResource( 1 )]
-margin_left = 84.0
-margin_right = 226.735
-margin_bottom = 240.0
-
-[node name="ElementCard2" parent="MarginContainer2/Row" instance=ExtResource( 1 )]
-margin_left = 226.0
-margin_right = 368.735
-margin_bottom = 240.0
-
-[node name="ElementCard3" parent="MarginContainer2/Row" instance=ExtResource( 1 )]
-margin_left = 368.0
-margin_right = 510.735
-margin_bottom = 240.0
-
-[node name="ElementCard4" parent="MarginContainer2/Row" instance=ExtResource( 1 )]
-margin_left = 510.0
-margin_right = 652.735
-margin_bottom = 240.0
 
 [node name="MarginContainer3" type="MarginContainer" parent="."]
 margin_left = 20.0
@@ -88,15 +68,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer3"]
+[node name="RPGLabel" type="RichTextLabel" parent="MarginContainer3"]
 margin_right = 428.0
 margin_bottom = 89.0
-
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer3/PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 421.0
-margin_bottom = 82.0
 custom_fonts/normal_font = ExtResource( 2 )
-text = "Test"
+visible_characters = 0
+percent_visible = 0.0
 fit_content_height = true
+scroll_following = true
+script = ExtResource( 1 )
+mode = 1
+volume_db = 0.0

@@ -7,7 +7,7 @@ var tile_map
 
 var targets = []
 var current_target: WeakRef
-var game_controller: GameController
+var game_controller
 var ex_tower: Node2D
 
 const textures = {
@@ -40,7 +40,7 @@ func try_place() -> bool:
 		var l_ex_tower = game_controller.get_tower(tile_pos)
 		if l_ex_tower:
 			var combined = Element.combine(l_ex_tower.element, element)
-			if ! combined.empty():
+			if ! combined.empty() && ! game_controller.modifiers.has("no_combine"):
 				l_ex_tower.element = combined
 				l_ex_tower.texture = textures[combined]
 				queue_free()
@@ -75,7 +75,7 @@ func _physics_process(delta: float) -> void:
 			ex_tower = game_controller.get_tower(tile_pos)
 			if ex_tower:
 				var combined = Element.combine(ex_tower.element, element)
-				if ! combined.empty():
+				if ! combined.empty() && ! game_controller.modifiers.has("no_combine"):
 					ex_tower.visible = false
 					texture = textures[combined]
 				else:
@@ -123,7 +123,7 @@ func _on_ShootTimer_timeout() -> void:
 		var target = current_target.get_ref()
 		if target:
 			var instance = projectile.instance()
-			instance.element = instance.assgin_enum_value(element)
+			instance.element = element
 			instance.position = position
 			instance.target_ref = current_target
 			instance.element = element
