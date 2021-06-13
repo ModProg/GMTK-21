@@ -7,7 +7,7 @@ extends Node
 onready var spawnTimer = $SpawnTimer
 onready var roundTimer = $RoundTimer
 
-const enemyScene = preload("res://Scenes/Enemy.tscn")
+#const enemyScene = preload("res://Scenes/Enemy.tscn")
 const health = 100
 
 var paths: Array
@@ -26,8 +26,7 @@ func SpawnEnemy():
 	var e = cur_round.get_enemy()
 	if e.empty():
 		return spawnTimer.stop()
-	var enemy = enemyScene.instance()
-	enemy.element = e
+	var enemy = Enemies.random_enemy().instance()
 	enemy.round_controller = self
 	paths[rand_range(0, paths.size())].add_child(enemy)
 

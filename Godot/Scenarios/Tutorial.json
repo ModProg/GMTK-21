@@ -1,13 +1,13 @@
 {
-  "map": "Scrap",
   "music": 1,
   "rounds": [
     {
       "help_text": "This is a Fire {{Fire}} enemy, it will run towards your base and damage it",
-      "enemies": ["Fire"],
+      "enemies": ["Bomb"],
       "card_count": 0,
       "round_time": 8,
       "spawn_time": 1,
+      "health": 100,
       "enemy_speed": 2
     },
     {
@@ -17,8 +17,9 @@
     },
     {
       "help_text": "You guessed it, Water {{Water}}. \nDrag the card on the map to place it.",
-      "enemy_distribution": { "Fire": 5 },
+      "enemy_distribution": { "Bomb": 5 },
       "cards": { "Water": 1 },
+      "health": 1,
       "round_time": 15,
       "spawn_time": 1,
       "initial_spawn_time": 5,

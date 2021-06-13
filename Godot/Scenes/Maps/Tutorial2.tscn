@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Art/Tileset.tres" type="TileSet" id=1]
 
-[sub_resource type="Curve2D" id=3]
+[sub_resource type="Curve2D" id=1]
 bake_interval = 0.01
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 32, 32, 0, 0, 0, 0, 32, 224, 0, 0, 0, 0, 224, 224, 0, 0, 0, 0, 224, 152, 0, 0, 0, 0, 488, 152, 0, 0, 0, 0, 488, 224, 0, 0, 0, 0, 568, 224 )
@@ -26,7 +26,7 @@ tile_data = PoolIntArray( 0, 11, 0, 1, 74, 0, 2, 75, 0, 3, 78, 0, 4, 81, 0, 5, 8
 [node name="Path0" type="Path2D" parent="." groups=[
 "path",
 ]]
-curve = SubResource( 3 )
+curve = SubResource( 1 )
 
 [node name="Path1" type="Path2D" parent="." groups=[
 "path",

@@ -6,7 +6,7 @@
 
 [node name="Node" type="Node"]
 script = ExtResource( 1 )
-_scenario = "res://Scenarios/TestCombinations.json"
+_scenario = "res://Scenarios/Tutorial.json"
 
 [node name="RoundController" type="Node" parent="."]
 pause_mode = 2

@@ -3,25 +3,21 @@
 [ext_resource path="res://Art/Tileset.tres" type="TileSet" id=1]
 
 [sub_resource type="Curve2D" id=1]
-bake_interval = 0.01
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 672, 32, 0, 0, 0, 0, 672, 544, 0, 0, 0, 0, 416, 544, 0, 0, 0, 0, 416, 96 )
 }
 
 [sub_resource type="Curve2D" id=2]
-bake_interval = 0.01
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 672, 32, 0, 0, 0, 0, 672, 544, 0, 0, 0, 0, 928, 544, 0, 0, 0, 0, 928, 96 )
 }
 
 [sub_resource type="Curve2D" id=3]
-bake_interval = 0.01
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 672, 32, 0, 0, 0, 0, 672, 800, 0, 0, 0, 0, 1184, 800, 0, 0, 0, 0, 1184, 96 )
 }
 
 [sub_resource type="Curve2D" id=4]
-bake_interval = 0.01
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 672, 32, 0, 0, 0, 0, 672, 800, 0, 0, 0, 0, 160, 800, 0, 0, 0, 0, 160, 96 )
 }
