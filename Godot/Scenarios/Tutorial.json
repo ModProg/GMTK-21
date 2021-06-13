@@ -66,22 +66,22 @@
     },
     {
       "name": "Round: 2/2",
-      "card_add": 2,
+      "card_count": 6,
       "map": "Tutorial2",
       "enemy_count": 8,
       "round_time": 100,
       "spawn_time": 1,
-      "retry": -1,
-      "modifiers": ["no_combine","all_dead_continue"]
+      "retry": true,
+      "modifiers": ["no_combine","all_dead_continue","clear"]
     },
     {
       "help_text": "Congratulations, your first rounds won! \nNow it's time to go for the joining. Let's start with Fire {{Fire}} and Earth {{Earth}}, can you guess what that makes?",
       "name": "Joined Together",
       "cards": { "Fire": 1, "Earth": 1},
-      "enemy_distribution":{},
-      "round_time": 10,
-      "spawn_time": 1,
-      "modifiers": ["clear"],
+      "enemy_distribution":{"PufferFish":5},
+      "round_time": 100,
+      "spawn_time": 4,
+      "modifiers": ["clear","all_dead_continue"],
       "retry": true
     }
   ]

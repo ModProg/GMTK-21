@@ -81,7 +81,7 @@ _global_script_class_icons={
 [application]
 
 config/name="GMTK-21"
-run/main_scene="res://Scenes/Scenes/Infinit.tscn"
+run/main_scene="res://Scenes/Scenes/Tutorial.tscn"
 config/icon="res://Art/icon.png"
 
 [display]

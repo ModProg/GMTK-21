@@ -69,7 +69,7 @@ func NewRound():
 	if cur_round.has_cards():
 		ui_controller.set_cards(cur_round.get_cards())
 	if cur_round.has_add_cards():
-		ui_controller.add_cards(cur_round.get_cards())
+		ui_controller.add_cards(cur_round.get_cards_add())
 	game_controller.modifiers = {}
 	for m in cur_round.modifiers:
 		game_controller.modifiers[m]=true
